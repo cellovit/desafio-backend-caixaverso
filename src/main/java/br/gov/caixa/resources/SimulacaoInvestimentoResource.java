@@ -4,6 +4,7 @@ import br.gov.caixa.dto.PageParams;
 import br.gov.caixa.dto.request.SimularInvestimentoRequestDto;
 import br.gov.caixa.exception.BusinessException;
 import br.gov.caixa.service.SimulacaoService;
+import io.quarkus.security.Authenticated;
 import io.smallrye.common.annotation.RunOnVirtualThread;
 import jakarta.inject.Inject;
 import jakarta.validation.Valid;
@@ -20,6 +21,8 @@ import org.eclipse.microprofile.faulttolerance.Timeout;
 @Timeout
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
+@Path("")
+@Authenticated
 public class SimulacaoInvestimentoResource extends AbstractResource {
 
     @Inject

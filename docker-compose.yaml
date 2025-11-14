@@ -13,6 +13,22 @@ services:
       MSSQL_SA_PASSWORD: Quarkus123
     labels:
       io.quarkus.devservices.compose.jdbc.parameters: trustServerCertificate=true
+  keycloak:
+    image: quay.io/keycloak/keycloak:26.4.0
+    command:
+      [
+        "start-dev",
+        "--import-realm"
+      ]
+    ports:
+      - "8081:8080"
+    environment:
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin
+    volumes:
+      - type: bind
+        source: ./config/keycloak-realm.json
+        target: /opt/keycloak/data/import/keycloak-realm.json
   app:
     build:
       context: .
