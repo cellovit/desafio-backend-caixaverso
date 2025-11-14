@@ -1,5 +1,12 @@
 # desafio-backend-caixaverso
 
+
+- [x] Project plan
+- [ ] Draft 1 code
+- [ ] Draft 2 code
+- [ ] Test plan
+
+
 This project uses Quarkus, the Supersonic Subatomic Java Framework.
 
 If you want to learn more about Quarkus, please visit its website: <https://quarkus.io/>.

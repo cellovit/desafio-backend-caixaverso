@@ -1,0 +1,21 @@
+package br.gov.caixa.domain.enums;
+
+import br.gov.caixa.exception.BusinessErrorInterface;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
+@Getter
+@AllArgsConstructor
+public enum BusinessExceptionEnum implements BusinessErrorInterface {
+
+    NOT_FOUND("404", "Not Found", "Recurso não encontrado"),
+    INTERNAL_SERVER_ERROR("500", "Internal Server Error", "Erro interno do servidor"),
+    UNAUTHORIZED("401", "Unauthorized", "Acesso não autorizado"),
+    BAD_REQUEST("400", "Bad Request", "Requisição inválida"),
+    TIMEOUT("524", "Request Timeout", "Tempo de requisição esgotado");
+
+    private final String code;
+    private final String title;
+    private final String detailMessage;
+
+}
