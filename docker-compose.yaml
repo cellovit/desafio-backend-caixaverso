@@ -41,7 +41,7 @@ services:
     image: quarkus/desafio-backend-caixaverso-jvm
     container_name: desafio-app
     ports:
-      - "8082:8080"
+      - "8080:8080"
     environment:
       QUARKUS_DATASOURCE_JDBC_URL: jdbc:sqlserver://mssql:1433;databaseName=master;integratedSecurity=false;encrypt=false;trustServerCertificate=true;
       QUARKUS_DATASOURCE_USERNAME: sa

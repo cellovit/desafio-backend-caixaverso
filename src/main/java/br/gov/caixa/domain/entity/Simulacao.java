@@ -23,20 +23,20 @@ public class Simulacao extends AbstractEntity {
     @NotNull
     @DecimalMin("0.0")
     @Digits(integer = 20, fraction = 2)
-    @Column(nullable = false, precision = 20, scale = 2)
+    @Column(name = "valor_investido", nullable = false, precision = 20, scale = 2)
     private BigDecimal valorInvestido;
 
     @NotNull
     @DecimalMin("0.0")
     @Digits(integer = 20, fraction = 2)
-    @Column(nullable = false, precision = 20, scale = 2)
+    @Column(name = "valor_final", nullable = false, precision = 20, scale = 2)
     private BigDecimal valorFinal;
 
     @NotNull
-    @Column(nullable = false)
+    @Column(name = "prazo_meses", nullable = false)
     private Integer prazoMeses;
 
     @NotNull
-    @Column(nullable = false)
+    @Column(name = "data_simulacao", nullable = false)
     private Instant dataSimulacao;
 }

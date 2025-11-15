@@ -21,17 +21,17 @@ public class Produto extends AbstractEntity {
     private String nome;
 
     @NotBlank
-    @Column(nullable = false)
+    @Column(name = "tipo", nullable = false)
     private String tipo;
 
     @NotNull
     @DecimalMin(value = "0.0", inclusive = true)
     @Digits(integer = 3, fraction = 4)
-    @Column(nullable = false, precision = 10, scale = 4)
+    @Column(name = "rentabilidade", nullable = false, precision = 10, scale = 4)
     private BigDecimal rentabilidade;
 
     @NotBlank
-    @Column(nullable = false)
+    @Column(name = "risco", nullable = false)
     private String risco;
 
 }
