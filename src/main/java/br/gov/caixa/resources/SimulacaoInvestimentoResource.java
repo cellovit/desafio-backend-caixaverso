@@ -23,6 +23,7 @@ import org.eclipse.microprofile.faulttolerance.Timeout;
 @Consumes(MediaType.APPLICATION_JSON)
 @Path("")
 @Authenticated
+//@SecurityRequirement(name = "Keycloak")
 public class SimulacaoInvestimentoResource extends AbstractResource {
 
     @Inject
