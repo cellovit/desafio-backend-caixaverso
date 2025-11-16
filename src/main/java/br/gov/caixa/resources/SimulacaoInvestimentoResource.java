@@ -13,12 +13,13 @@ import jakarta.validation.constraints.Min;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
-import lombok.Getter;
+import io.micrometer.core.annotation.Counted;
+import io.micrometer.core.annotation.Timed;
 import lombok.extern.slf4j.Slf4j;
 import org.eclipse.microprofile.faulttolerance.Timeout;
 
 @Slf4j
-@Timeout
+@Timeout(5000)
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 @Path("")
@@ -32,6 +33,8 @@ public class SimulacaoInvestimentoResource extends AbstractResource {
     @Path("/simulacoes")
     @GET
     @RunOnVirtualThread
+    @Timed(value = "api.products.list.timer", description = "Time to list all products")
+    @Counted(value = "api.products.list.counter", description = "Count of list requests")
     public Response getHistoricoSimulacoes(
             @QueryParam("page")
             @DefaultValue("1")

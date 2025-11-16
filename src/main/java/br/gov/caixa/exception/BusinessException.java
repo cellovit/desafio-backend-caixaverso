@@ -25,7 +25,14 @@ public class BusinessException extends RuntimeException {
 
     public static Response businessExceptionResponseBuilder(BusinessException businessException) {
         return Response.status(Integer.parseInt(businessException.getBusinessError().getCode()))
-                .entity(buildErrorBody(businessException.getBusinessError()) )
+                .entity(buildErrorBody(businessException.getBusinessError()))
+                .build();
+    }
+
+    public static Response businessExceptionResponseBuilder(Exception genericException) {
+        BusinessException businessException = of(genericException);
+        return Response.status(Integer.parseInt(businessException.getBusinessError().getCode()))
+                .entity(buildErrorBody(businessException.getBusinessError()))
                 .build();
     }
 
