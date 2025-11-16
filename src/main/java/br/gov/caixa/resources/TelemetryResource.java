@@ -30,12 +30,9 @@ public class TelemetryResource extends AbstractResource {
 
     @Path("/telemetria")
     @GET
-//    @RunOnVirtualThread
+    @RunOnVirtualThread
     public Response getTelemetryData() {
-        return processAndLog(() -> {
-            log.info("Telemetry data collected successfully.");
-            return Response.ok(telemetryService.collectTelemetryData()).build();
-        });
+        return processAndLog(() -> Response.ok(telemetryService.collectTelemetryData()).build());
     }
 
 }

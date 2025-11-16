@@ -4,7 +4,7 @@ import br.gov.caixa.dto.PageParams;
 import br.gov.caixa.dto.request.SimularInvestimentoRequestDto;
 import br.gov.caixa.dto.response.HistoricoSimulacaoResponseDto;
 import br.gov.caixa.dto.response.ResultadoSimulacaoInvestimentoResponseDto;
-import br.gov.caixa.repository.SimulacaoRepository;
+import br.gov.caixa.domain.dao.SimulacaoDao;
 import br.gov.caixa.service.SimulacaoService;
 import io.opentelemetry.instrumentation.annotations.WithSpan;
 import jakarta.enterprise.context.ApplicationScoped;
@@ -18,7 +18,7 @@ import java.util.List;
 public class SimulacaoServiceImpl implements SimulacaoService {
 
     @Inject
-    SimulacaoRepository simulacaoRepository;
+    SimulacaoDao simulacaoDao;
 
     @Override
     public ResultadoSimulacaoInvestimentoResponseDto simularInvestimento(SimularInvestimentoRequestDto requestDto) {
@@ -28,7 +28,7 @@ public class SimulacaoServiceImpl implements SimulacaoService {
     @Override
     @WithSpan("updateProduct")
     public List<HistoricoSimulacaoResponseDto> obterHistoricoSimulacoes(PageParams pageParams) {
-        simulacaoRepository.findPaginado(pageParams);
+        simulacaoDao.findPaginado(pageParams);
         return null;
     }
 

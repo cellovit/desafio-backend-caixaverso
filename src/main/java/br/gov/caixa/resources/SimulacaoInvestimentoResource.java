@@ -1,8 +1,11 @@
 package br.gov.caixa.resources;
 
+import br.gov.caixa.domain.constants.HttpResponseCode;
 import br.gov.caixa.dto.PageParams;
 import br.gov.caixa.dto.request.SimularInvestimentoRequestDto;
+import br.gov.caixa.dto.response.HistoricoSimulacaoResponseDto;
 import br.gov.caixa.exception.BusinessException;
+import br.gov.caixa.exception.ErrorResponse;
 import br.gov.caixa.service.SimulacaoService;
 import io.quarkus.security.Authenticated;
 import io.smallrye.common.annotation.RunOnVirtualThread;
@@ -17,6 +20,17 @@ import io.micrometer.core.annotation.Counted;
 import io.micrometer.core.annotation.Timed;
 import lombok.extern.slf4j.Slf4j;
 import org.eclipse.microprofile.faulttolerance.Timeout;
+import org.eclipse.microprofile.openapi.annotations.Operation;
+import org.eclipse.microprofile.openapi.annotations.media.Content;
+import org.eclipse.microprofile.openapi.annotations.media.Schema;
+import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
+import org.eclipse.microprofile.openapi.annotations.security.SecurityRequirement;
+import org.eclipse.microprofile.openapi.annotations.tags.Tag;
+
+import java.util.List;
+
+import static br.gov.caixa.domain.constants.HttpResponseCode.*;
+import static br.gov.caixa.domain.constants.HttpResponseDescription.*;
 
 @Slf4j
 @Timeout(5000)
@@ -24,7 +38,7 @@ import org.eclipse.microprofile.faulttolerance.Timeout;
 @Consumes(MediaType.APPLICATION_JSON)
 @Path("")
 @Authenticated
-//@SecurityRequirement(name = "Keycloak")
+@SecurityRequirement(name = "Keycloak")
 public class SimulacaoInvestimentoResource extends AbstractResource {
 
     @Inject
@@ -33,8 +47,15 @@ public class SimulacaoInvestimentoResource extends AbstractResource {
     @Path("/simulacoes")
     @GET
     @RunOnVirtualThread
-    @Timed(value = "api.products.list.timer", description = "Time to list all products")
-    @Counted(value = "api.products.list.counter", description = "Count of list requests")
+    @Tag(name = "Histórico de Simulações de Investimento", description = "Histórico de Simulações de Investimento")
+    @Operation(summary = "Obter histórico de simulações de investimento", description = "Retorna uma lista paginada com o histórico de simulações de investimento realizadas pelo usuário.")
+    @APIResponse(responseCode = OK_200, description = "Histórico de simulações obtido com sucesso.", content = @Content(schema = @Schema(implementation = HistoricoSimulacaoResponseDto.class)))
+    @APIResponse(responseCode = BAD_REQUEST_400, description = BAD_REQUEST_DESCRIPTION, content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
+    @APIResponse(responseCode = INTERNAL_SERVER_ERROR_500, description = INTERNAL_SERVER_ERROR_DESCRIPTION, content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
+    @APIResponse(responseCode = TIMEOUT_524, description = TIMEOUT_DESCRIPTION, content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
+    @APIResponse(responseCode = GATEWAT_TIMEOUT_504, description = GATEWAT_TIMEOUT_DESCRIPTION, content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
+    @APIResponse(responseCode = UNAUTHORIZED_401, description = UNAUTHORIZED_DESCRIPTION, content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
+    @APIResponse(responseCode = NOT_FOUND_404, description = NOT_FOUND_DESCRIPTION, content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
     public Response getHistoricoSimulacoes(
             @QueryParam("page")
             @DefaultValue("1")
@@ -48,9 +69,7 @@ public class SimulacaoInvestimentoResource extends AbstractResource {
     ) throws BusinessException {
         return processAndLog(() -> {
             var pageParams = new PageParams(Integer.parseInt(page), Integer.parseInt(pageSize));
-            simulacaoService.obterHistoricoSimulacoes(pageParams);
-            log.info("Simulação de investimento realizada com sucesso.");
-            return Response.ok("Simulação de investimento concluída.").build();
+            return Response.ok(simulacaoService.obterHistoricoSimulacoes(pageParams)).build();
         });
     }
 

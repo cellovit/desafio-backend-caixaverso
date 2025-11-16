@@ -22,7 +22,9 @@ public class TelemetryServiceImpl implements TelemetryService {
     public TelemetryResponseDto collectTelemetryData() {
         var servicos = new ArrayList<TelemetryServiceResponseDto>();
 
-        registry.get("http.server.requests").timers()
+        final String SERVER_REQUESTS = "http.server.requests";
+
+        registry.get(SERVER_REQUESTS).timers()
                 .forEach(t -> {
                     var servico = TelemetryServiceResponseDto.builder()
                             .nome(t.getId().getTag("uri"))

@@ -71,5 +71,5 @@ services:
 #      retries: 30
 
 volumes:
-  db_data:
+  db_data: {}
 
