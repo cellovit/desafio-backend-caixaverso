@@ -4,14 +4,15 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.time.ZonedDateTime;
 
 public record HistoricoSimulacaoResponseDto(
         @JsonProperty("id")
-        Long id,
+        BigInteger id,
 
         @JsonProperty("clienteId")
-        Integer clienteId,
+        BigInteger clienteId,
 
         @JsonProperty("produto")
         String produto,

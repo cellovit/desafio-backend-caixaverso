@@ -10,12 +10,6 @@ import java.math.BigDecimal;
 @Slf4j
 public class SimulacaoInvestimentoContext {
 
-//    private CalculadoraInvestimentoStrategy strategy;
-//
-//    public InvestimentoContext(CalculadoraInvestimentoStrategy strategy) {
-//        this.strategy = strategy;
-//    }
-
     public BigDecimal calcularValorFinal(CalculadoraInvestimentoStrategy strategy, BigDecimal valorAplicado, BigDecimal rentabilidade, int prazoMeses) {
         return strategy.calcularValorFinal(valorAplicado, rentabilidade, prazoMeses);
     }

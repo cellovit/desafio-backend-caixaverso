@@ -20,7 +20,7 @@ public class SimulacaoDao implements SimulacaoRepository {
         var page = Page.of(pageParams.page(), pageParams.pageSize());
 
         return Simulacao.findAll()
-                .page(page)
+//                .page(page)
                 .list();
     }
 

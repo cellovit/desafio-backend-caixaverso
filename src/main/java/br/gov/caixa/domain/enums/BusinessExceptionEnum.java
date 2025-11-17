@@ -15,7 +15,8 @@ public enum BusinessExceptionEnum implements BusinessErrorInterface {
     TIMEOUT("524", "Request Timeout", "Tempo de requisição esgotado"),
     ILLEGAL_ARGUMENT("400", "Illegal Argument", "Argumento ilegal fornecido"),
     UNPROCESSABLE_ENTITY("422", "Unprocessable Entity", "Entidade não processável"),
-    PRODUTO_INVESTIMENTO_FORA_DO_ESCOPO("422", "Produto Investimento Fora do Escopo", "O produto de investimento solicitado não pode ser processado neste contexto.");
+    PRODUTO_INVESTIMENTO_FORA_DO_ESCOPO("422", "Produto Investimento Fora do Escopo", "O produto de investimento solicitado não pode ser processado neste contexto."),
+    INVESTIDOR_NAO_ENCONTRADO("404", "Investidor Não Encontrado", "O investidor especificado não foi encontrado na base de dados.");
 
     private final String code;
     private final String title;

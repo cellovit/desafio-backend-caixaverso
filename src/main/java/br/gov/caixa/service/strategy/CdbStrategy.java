@@ -7,6 +7,7 @@ import jakarta.enterprise.context.RequestScoped;
 import lombok.extern.slf4j.Slf4j;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 //@RequestScoped
 @Slf4j
@@ -17,11 +18,13 @@ public class CdbStrategy implements CalculadoraInvestimentoStrategy {
     public BigDecimal calcularValorFinal(BigDecimal valorAplicado, BigDecimal rentabilidade, int prazoMeses) {
         // Juros compostos mensais
         BigDecimal fator = BigDecimal.ONE.add(rentabilidade);
-        return valorAplicado.multiply(fator.pow(prazoMeses));
+        return valorAplicado.multiply(fator.pow(prazoMeses))
+                .setScale(2, RoundingMode.UP);
     }
 
     @Override
     public BigDecimal calcularRentabilidadeEfetiva(BigDecimal valorAplicado, BigDecimal valorFinal) {
-        return valorFinal.subtract(valorAplicado).divide(valorAplicado, 4, BigDecimal.ROUND_HALF_UP);
+        return valorFinal.subtract(valorAplicado).divide(valorAplicado, 4, BigDecimal.ROUND_HALF_UP)
+                .setScale(2, RoundingMode.UP);
     }
 }

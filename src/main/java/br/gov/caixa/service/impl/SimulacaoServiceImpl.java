@@ -1,6 +1,8 @@
 package br.gov.caixa.service.impl;
 
+import br.gov.caixa.domain.entity.Simulacao;
 import br.gov.caixa.domain.enums.BusinessExceptionEnum;
+import br.gov.caixa.domain.repository.InvestidorRepository;
 import br.gov.caixa.domain.repository.ProdutoInvestimentoRepository;
 import br.gov.caixa.dto.PageParams;
 import br.gov.caixa.dto.request.SimularInvestimentoRequestDto;
@@ -10,16 +12,19 @@ import br.gov.caixa.dto.response.ResultadoSimulacaoInvestimentoResponseDto;
 import br.gov.caixa.domain.dao.SimulacaoDao;
 import br.gov.caixa.exception.BusinessException;
 import br.gov.caixa.mapper.ProdutoMapper;
+import br.gov.caixa.mapper.SimulacaoMapper;
 import br.gov.caixa.service.SimulacaoService;
 import br.gov.caixa.service.context.SimulacaoInvestimentoContext;
 import br.gov.caixa.service.strategy.factory.SimulacaoInvestimentoStrategyFactory;
 import io.opentelemetry.instrumentation.annotations.WithSpan;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 @Slf4j
 @ApplicationScoped
@@ -40,7 +45,14 @@ public class SimulacaoServiceImpl implements SimulacaoService {
     @Inject
     ProdutoMapper produtoMapper;
 
+    @Inject
+    SimulacaoMapper simulacaoMapper;
+
+    @Inject
+    InvestidorRepository investidorRepository;
+
     @Override
+    @Transactional
     public ResultadoSimulacaoInvestimentoResponseDto simularInvestimento(SimularInvestimentoRequestDto requestDto) {
         var strategy = simulacaoInvestimentoStrategyFactory.getStrategy(requestDto.tipoProduto());
         var produtoInvestimento = produtoInvestimentoRepository.findByTipo(requestDto.tipoProduto())
@@ -50,20 +62,25 @@ public class SimulacaoServiceImpl implements SimulacaoService {
         BigDecimal rentabilidadeEfetiva = context.calcularRentabilidadeEfetiva(strategy, requestDto.valor(), valorFinal);
 
         var produtoValidado = produtoMapper.toProdutoRecomendadoResponseDto(produtoInvestimento);
+        var resultadoSimulacao = buildResultadoSimulacaoDto(valorFinal, rentabilidadeEfetiva, requestDto.prazomeses());
 
         var resultado = ResultadoSimulacaoInvestimentoResponseDto.builder()
                 .produtoValidado(produtoValidado)
-                .resultadoSimulacaoDto(buildResultadoSimulacaoDto(valorFinal, rentabilidadeEfetiva, requestDto.prazomeses()))
+                .resultadoSimulacaoDto(resultadoSimulacao)
                 .dataSimulacao(java.time.ZonedDateTime.now())
                 .build();
+        simulacaoDao.persist(buildSimulacaoEntityToSave(resultado, requestDto));
 
         return resultado;
     }
 
     @Override
     public List<HistoricoSimulacaoResponseDto> obterHistoricoSimulacoes(PageParams pageParams) {
-        simulacaoDao.findPaginado(pageParams);
-        return null;
+        var all = simulacaoDao.listAll();
+
+        return simulacaoDao.findPaginado(pageParams)
+                .stream().map(simulacaoMapper::toHistoricoSimulacaoResponseDto)
+                .toList();
     }
 
     private ResultadoSimulacaoDto buildResultadoSimulacaoDto(BigDecimal valorFinal, BigDecimal rentabilidadeEfetiva, Integer prazoMeses) {
@@ -72,6 +89,20 @@ public class SimulacaoServiceImpl implements SimulacaoService {
                 rentabilidadeEfetiva,
                 prazoMeses
         );
+    }
+
+    private Simulacao buildSimulacaoEntityToSave(ResultadoSimulacaoInvestimentoResponseDto resultado, SimularInvestimentoRequestDto requestDto) {
+        var investidor = investidorRepository.findByIdOptional(requestDto.clienteId())
+                .orElseThrow(() -> new BusinessException(BusinessExceptionEnum.INVESTIDOR_NAO_ENCONTRADO));
+
+        return Simulacao.builder()
+                .produto(resultado.produtoValidado().nome())
+                .valorInvestido(requestDto.valor())
+                .valorFinal(resultado.resultadoSimulacaoDto().valorFinal())
+                .prazoMeses(resultado.resultadoSimulacaoDto().prazoMeses())
+                .dataSimulacao(resultado.dataSimulacao())
+                .investidor(investidor)
+                .build();
     }
 
 }

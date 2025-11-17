@@ -6,12 +6,15 @@ import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import java.math.BigDecimal;
-import java.time.Instant;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import java.time.ZonedDateTime;
+
+import lombok.*;
 
 @Entity
 @Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @Table(name = "simulacao")
 public class Simulacao extends AbstractEntity {
@@ -38,7 +41,7 @@ public class Simulacao extends AbstractEntity {
 
     @NotNull
     @Column(name = "data_simulacao", nullable = false)
-    private Instant dataSimulacao;
+    private ZonedDateTime dataSimulacao;
 
     @ManyToOne
     @JoinColumn(name = "investidor_id", nullable = false)

@@ -1,6 +1,5 @@
 package br.gov.caixa.resources;
 
-import br.gov.caixa.domain.constants.HttpResponseCode;
 import br.gov.caixa.dto.PageParams;
 import br.gov.caixa.dto.request.SimularInvestimentoRequestDto;
 import br.gov.caixa.dto.response.HistoricoSimulacaoResponseDto;
@@ -16,8 +15,6 @@ import jakarta.validation.constraints.Min;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
-import io.micrometer.core.annotation.Counted;
-import io.micrometer.core.annotation.Timed;
 import lombok.extern.slf4j.Slf4j;
 import org.eclipse.microprofile.faulttolerance.Timeout;
 import org.eclipse.microprofile.openapi.annotations.Operation;
@@ -26,8 +23,6 @@ import org.eclipse.microprofile.openapi.annotations.media.Schema;
 import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
 import org.eclipse.microprofile.openapi.annotations.security.SecurityRequirement;
 import org.eclipse.microprofile.openapi.annotations.tags.Tag;
-
-import java.util.List;
 
 import static br.gov.caixa.domain.constants.HttpResponseCode.*;
 import static br.gov.caixa.domain.constants.HttpResponseDescription.*;
@@ -53,9 +48,7 @@ public class SimulacaoInvestimentoResource extends AbstractResource {
     @APIResponse(responseCode = BAD_REQUEST_400, description = BAD_REQUEST_DESCRIPTION, content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
     @APIResponse(responseCode = INTERNAL_SERVER_ERROR_500, description = INTERNAL_SERVER_ERROR_DESCRIPTION, content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
     @APIResponse(responseCode = TIMEOUT_524, description = TIMEOUT_DESCRIPTION, content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
-    @APIResponse(responseCode = GATEWAT_TIMEOUT_504, description = GATEWAT_TIMEOUT_DESCRIPTION, content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
     @APIResponse(responseCode = UNAUTHORIZED_401, description = UNAUTHORIZED_DESCRIPTION, content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
-    @APIResponse(responseCode = NOT_FOUND_404, description = NOT_FOUND_DESCRIPTION, content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
     public Response getHistoricoSimulacoes(
             @QueryParam("page")
             @DefaultValue("1")

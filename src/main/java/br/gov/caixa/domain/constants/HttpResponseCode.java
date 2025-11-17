@@ -6,6 +6,6 @@ public class HttpResponseCode {
     public static final String UNAUTHORIZED_401 = "401";
     public static final String NOT_FOUND_404 = "404";
     public static final String TIMEOUT_524 = "524";
-    public static final String GATEWAT_TIMEOUT_504 = "504";
+    public static final String GATEWAY_TIMEOUT_504 = "504";
     public static final String INTERNAL_SERVER_ERROR_500 = "500";
 }
