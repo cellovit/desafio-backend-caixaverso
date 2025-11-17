@@ -15,7 +15,7 @@ public class BusinessException extends RuntimeException {
 
     private final BusinessErrorInterface businessError;
 
-    private BusinessException(BusinessErrorInterface businessError) {
+    public BusinessException(BusinessErrorInterface businessError) {
         super(businessError.getDetailMessage());
         this.businessError = businessError;
         log.error("BusinessException : Code={}, DetailMessage={}",

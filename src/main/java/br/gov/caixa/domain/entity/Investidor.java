@@ -10,15 +10,12 @@ import java.util.List;
 @Entity
 @Data
 @EqualsAndHashCode(callSuper = true)
+@Table(name = "investidor")
 public class Investidor extends AbstractEntity {
 
     @NotNull
     @Column(nullable = false)
     private String nome;
-
-    @NotNull
-    @Column(name = "idade", nullable = false)
-    private Integer idade;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "perfil_id", referencedColumnName = "id", nullable = false)
@@ -26,5 +23,8 @@ public class Investidor extends AbstractEntity {
 
     @OneToMany(mappedBy = "investidor", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Investimento> investimentos;
+
+    @OneToMany(mappedBy = "investidor", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Simulacao> simulacoes;
 
 }

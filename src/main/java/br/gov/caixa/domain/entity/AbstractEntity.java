@@ -18,7 +18,7 @@ import static java.util.Objects.isNull;
 public class AbstractEntity extends PanacheEntity {
 
     @Column(name = "uuid", unique = true, nullable = false, updatable = false)
-    private UUID uuid;
+    private String uuid;
 
     @Column(name = "created_at")
     @CreationTimestamp
@@ -31,7 +31,7 @@ public class AbstractEntity extends PanacheEntity {
     @PrePersist
     void prePersist() {
         if (isNull(uuid)) {
-            uuid = UUID.randomUUID();
+            uuid = UUID.randomUUID().toString();
         }
     }
 

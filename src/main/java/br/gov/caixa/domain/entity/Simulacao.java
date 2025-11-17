@@ -1,7 +1,6 @@
 package br.gov.caixa.domain.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.NotBlank;
@@ -14,6 +13,7 @@ import lombok.EqualsAndHashCode;
 @Entity
 @Data
 @EqualsAndHashCode(callSuper = true)
+@Table(name = "simulacao")
 public class Simulacao extends AbstractEntity {
 
     @NotBlank
@@ -39,4 +39,8 @@ public class Simulacao extends AbstractEntity {
     @NotNull
     @Column(name = "data_simulacao", nullable = false)
     private Instant dataSimulacao;
+
+    @ManyToOne
+    @JoinColumn(name = "investidor_id", nullable = false)
+    private Investidor investidor;
 }

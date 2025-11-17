@@ -73,11 +73,12 @@ public class SimulacaoInvestimentoResource extends AbstractResource {
         });
     }
 
+    @POST
     @Path("/simular-investimento")
+    @RunOnVirtualThread
     public Response simularInvestimento(@Valid SimularInvestimentoRequestDto requestDto) {
         return processAndLog(() -> {
-            log.info("Simulação de investimento realizada com sucesso.");
-            return Response.ok("Simulação de investimento concluída.").build();
+            return Response.ok(simulacaoService.simularInvestimento(requestDto)).build();
         });
     }
 

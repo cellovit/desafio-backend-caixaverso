@@ -12,6 +12,7 @@ import java.util.List;
 @Entity
 @Data
 @EqualsAndHashCode(callSuper = true)
+@Table(name = "produto_investimento")
 public class ProdutoInvestimento extends AbstractEntity {
 
     @NotNull
