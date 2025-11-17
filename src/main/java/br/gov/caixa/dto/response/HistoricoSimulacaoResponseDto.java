@@ -5,7 +5,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.time.ZonedDateTime;
+import java.time.LocalDate;
+import java.time.LocalDate;
 
 public record HistoricoSimulacaoResponseDto(
         @JsonProperty("id")
@@ -27,7 +28,7 @@ public record HistoricoSimulacaoResponseDto(
         Integer prazoMeses,
 
         @JsonProperty("dataSimulacao")
-        ZonedDateTime dataSimulacao
+        LocalDate dataSimulacao
 ) implements Serializable {
 }
 

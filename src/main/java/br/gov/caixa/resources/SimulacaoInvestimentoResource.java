@@ -6,12 +6,14 @@ import br.gov.caixa.dto.response.HistoricoSimulacaoResponseDto;
 import br.gov.caixa.exception.BusinessException;
 import br.gov.caixa.exception.ErrorResponse;
 import br.gov.caixa.service.SimulacaoService;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.quarkus.security.Authenticated;
 import io.smallrye.common.annotation.RunOnVirtualThread;
 import jakarta.inject.Inject;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
@@ -24,11 +26,13 @@ import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
 import org.eclipse.microprofile.openapi.annotations.security.SecurityRequirement;
 import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 
+import java.time.LocalDate;
+
 import static br.gov.caixa.domain.constants.HttpResponseCode.*;
 import static br.gov.caixa.domain.constants.HttpResponseDescription.*;
 
 @Slf4j
-@Timeout(5000)
+@Timeout(10000)
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 @Path("")
@@ -63,6 +67,47 @@ public class SimulacaoInvestimentoResource extends AbstractResource {
         return processAndLog(() -> {
             var pageParams = new PageParams(Integer.parseInt(page), Integer.parseInt(pageSize));
             return Response.ok(simulacaoService.obterHistoricoSimulacoes(pageParams)).build();
+        });
+    }
+
+    @Path("/simulacoes/por-produto-dia")
+    @GET
+    @RunOnVirtualThread
+    @Tag(name = "Histórico de Simulações de Investimento", description = "Histórico de Simulações de Investimento")
+    @Operation(summary = "Obter histórico de simulações de investimento", description = "Retorna uma lista paginada com o histórico de simulações de investimento realizadas pelo usuário.")
+    @APIResponse(responseCode = OK_200, description = "Histórico de simulações obtido com sucesso.", content = @Content(schema = @Schema(implementation = HistoricoSimulacaoResponseDto.class)))
+    @APIResponse(responseCode = BAD_REQUEST_400, description = BAD_REQUEST_DESCRIPTION, content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
+    @APIResponse(responseCode = INTERNAL_SERVER_ERROR_500, description = INTERNAL_SERVER_ERROR_DESCRIPTION, content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
+    @APIResponse(responseCode = TIMEOUT_524, description = TIMEOUT_DESCRIPTION, content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
+    @APIResponse(responseCode = UNAUTHORIZED_401, description = UNAUTHORIZED_DESCRIPTION, content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
+    public Response getHistoricoSimulacoesPorProdutoDia(
+            @QueryParam("page")
+            @DefaultValue("1")
+            @Min(1)
+            String page,
+
+            @QueryParam("pageSize")
+            @DefaultValue("10")
+            @Max(100)
+            String pageSize,
+
+            @NotNull
+            @QueryParam("produto")
+            String produto,
+
+            @QueryParam("dataInicio")
+            @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+            @DefaultValue("0001-01-01")
+            LocalDate dataInicio,
+
+            @QueryParam("dataFim")
+            @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+            @DefaultValue("9999-12-31")
+            LocalDate dataFim
+    ) throws BusinessException {
+        return processAndLog(() -> {
+            var pageParams = new PageParams(Integer.parseInt(page), Integer.parseInt(pageSize));
+            return Response.ok(simulacaoService.obterHistoricoSimulacoesPorProdutoDia(produto, dataInicio, dataFim, pageParams)).build();
         });
     }
 

@@ -5,13 +5,14 @@ import jakarta.ws.rs.core.Response;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
+import java.io.Serializable;
 import java.util.Optional;
 
 import static org.apache.commons.lang3.exception.ExceptionUtils.throwableOfType;
 
 @Getter
 @Slf4j
-public class BusinessException extends RuntimeException {
+public class BusinessException extends RuntimeException implements Serializable {
 
     private final BusinessErrorInterface businessError;
 

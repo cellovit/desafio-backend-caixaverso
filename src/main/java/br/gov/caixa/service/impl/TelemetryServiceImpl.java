@@ -7,6 +7,7 @@ import io.micrometer.core.instrument.MeterRegistry;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.*;
 import java.util.concurrent.TimeUnit;
@@ -25,6 +26,7 @@ public class TelemetryServiceImpl implements TelemetryService {
         final String SERVER_REQUESTS = "http.server.requests";
 
         registry.get(SERVER_REQUESTS).timers()
+                .stream().filter(x -> StringUtils.contains(x.getId().getTag("uri"), "/"))
                 .forEach(t -> {
                     var servico = TelemetryServiceResponseDto.builder()
                             .nome(t.getId().getTag("uri"))

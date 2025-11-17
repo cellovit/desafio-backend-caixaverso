@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Builder;
 
 import java.io.Serializable;
-import java.time.ZonedDateTime;
+import java.time.LocalDate;
 
 @Builder
 public record ResultadoSimulacaoInvestimentoResponseDto(
@@ -15,6 +15,6 @@ public record ResultadoSimulacaoInvestimentoResponseDto(
         ResultadoSimulacaoDto resultadoSimulacaoDto,
 
         @JsonProperty("dataSimulacao")
-        ZonedDateTime dataSimulacao
+        LocalDate dataSimulacao
 ) implements Serializable {
 }

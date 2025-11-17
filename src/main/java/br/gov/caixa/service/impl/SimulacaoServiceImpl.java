@@ -23,6 +23,7 @@ import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
@@ -67,7 +68,7 @@ public class SimulacaoServiceImpl implements SimulacaoService {
         var resultado = ResultadoSimulacaoInvestimentoResponseDto.builder()
                 .produtoValidado(produtoValidado)
                 .resultadoSimulacaoDto(resultadoSimulacao)
-                .dataSimulacao(java.time.ZonedDateTime.now())
+                .dataSimulacao(java.time.LocalDate.now())
                 .build();
         simulacaoDao.persist(buildSimulacaoEntityToSave(resultado, requestDto));
 
@@ -76,9 +77,14 @@ public class SimulacaoServiceImpl implements SimulacaoService {
 
     @Override
     public List<HistoricoSimulacaoResponseDto> obterHistoricoSimulacoes(PageParams pageParams) {
-        var all = simulacaoDao.listAll();
-
         return simulacaoDao.findPaginado(pageParams)
+                .stream().map(simulacaoMapper::toHistoricoSimulacaoResponseDto)
+                .toList();
+    }
+
+    @Override
+    public List<HistoricoSimulacaoResponseDto> obterHistoricoSimulacoesPorProdutoDia(String produto, LocalDate dataInicio, LocalDate dataFim, PageParams pageParams) {
+        return simulacaoDao.findPaginadoPorProdutoDia(produto, dataInicio, dataFim, pageParams)
                 .stream().map(simulacaoMapper::toHistoricoSimulacaoResponseDto)
                 .toList();
     }
