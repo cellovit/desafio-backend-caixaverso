@@ -1,5 +1,10 @@
 package br.gov.caixa.domain.enums;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
+@Getter
+@AllArgsConstructor
 public enum TipoProdutoEnum {
     CDB("Certificado de Depósito Bancário"),
     LCI("Letra de Crédito Imobiliário"),
@@ -15,12 +20,4 @@ public enum TipoProdutoEnum {
     FUNDO_INVESTIMENTO("Fundo de Investimento");
 
     private final String descricao;
-
-    TipoProdutoEnum(String descricao) {
-        this.descricao = descricao;
-    }
-
-    public String getDescricao() {
-        return descricao;
-    }
 }

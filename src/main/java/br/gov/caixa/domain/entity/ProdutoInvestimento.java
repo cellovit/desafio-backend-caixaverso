@@ -1,36 +1,42 @@
 package br.gov.caixa.domain.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.DecimalMin;
-import jakarta.validation.constraints.Digits;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @Entity
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class Produto extends AbstractEntity {
+public class ProdutoInvestimento extends AbstractEntity {
 
-    @NotBlank
+    @NotNull
     @Column(name = "nome", nullable = false)
-    private String nome;
+    private String nome; // ex.: "CDB Banco X", "Tesouro Selic"
 
-    @NotBlank
+    @NotNull
     @Column(name = "tipo", nullable = false)
-    private String tipo;
+    private String tipo; // renda fixa, renda variável, fundo, etc.
 
     @NotNull
     @DecimalMin(value = "0.0", inclusive = true)
     @Column(name = "rentabilidade", nullable = false, precision = 10, scale = 4)
     private BigDecimal rentabilidade;
 
-    @NotBlank
+    @NotNull
     @Column(name = "risco", nullable = false)
-    private String risco;
+    private String risco; // baixo, médio, alto
+
+    @ManyToMany
+    @JoinTable(
+            name = "produto_perfil",
+            joinColumns = @JoinColumn(name = "produto_id"),
+            inverseJoinColumns = @JoinColumn(name = "perfil_id")
+    )
+    private List<PerfilInvestidor> perfis;
 
 }

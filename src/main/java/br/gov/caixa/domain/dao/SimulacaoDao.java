@@ -1,6 +1,7 @@
 package br.gov.caixa.domain.dao;
 
 import br.gov.caixa.domain.entity.Simulacao;
+import br.gov.caixa.domain.repository.SimulacaoRepository;
 import br.gov.caixa.dto.PageParams;
 import io.quarkus.hibernate.orm.panache.PanacheRepository;
 
@@ -12,7 +13,7 @@ import java.util.List;
 
 @ApplicationScoped
 @Slf4j
-public class SimulacaoDao implements PanacheRepository<Simulacao> {
+public class SimulacaoDao implements SimulacaoRepository {
 
 
     public List<Simulacao> findPaginado(PageParams pageParams) {

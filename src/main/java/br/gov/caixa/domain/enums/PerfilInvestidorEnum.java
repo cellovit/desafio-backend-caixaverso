@@ -1,23 +1,18 @@
 package br.gov.caixa.domain.enums;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
+import static br.gov.caixa.domain.constants.ApiConstants.*;
+
+@Getter
+@AllArgsConstructor
 public enum PerfilInvestidorEnum {
-    CONSERVADOR("Conservador", "Baixa movimentação, foco em liquidez"),
-    MODERADO("Moderado", "Equilíbrio entre liquidez e rentabilidade"),
-    AGRESSIVO("Agressivo", "Busca por alta rentabilidade, maior risco");
+    CONSERVADOR(TITULO_PERFIL_CONSERVADOR, "Baixa movimentação, foco em liquidez", PONTUACAO_PERFIL_CONSERVADOR),
+    MODERADO(TITULO_PERFIL_MODERADO, "Equilíbrio entre liquidez e rentabilidade", PONTUACAO_PERFIL_MODERADO),
+    AGRESSIVO(TITULO_PERFIL_AGRESSIVO, "Busca por alta rentabilidade, maior risco", PONTUACAO_PERFIL_AGRESSIVO);
 
     private final String nome;
     private final String descricao;
-
-    PerfilInvestidorEnum(String nome, String descricao) {
-        this.nome = nome;
-        this.descricao = descricao;
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public String getDescricao() {
-        return descricao;
-    }
+    private final Double pontuacao;
 }
