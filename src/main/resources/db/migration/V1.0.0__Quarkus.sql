@@ -74,6 +74,7 @@ BEGIN
     CREATE TABLE dbo.investimento (
         id BIGINT IDENTITY(1,1) PRIMARY KEY,
         titulo NVARCHAR(255) NOT NULL,
+        tipo NVARCHAR(255) NOT NULL,
         valor_aplicado DECIMAL(20,2) NOT NULL,
         prazo_meses INT NULL,
         rentabilidade DECIMAL(10,4) NOT NULL,

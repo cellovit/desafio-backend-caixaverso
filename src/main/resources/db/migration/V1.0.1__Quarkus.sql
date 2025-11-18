@@ -30,10 +30,14 @@ VALUES
 (3, 3); -- Fundo Agressivo Y recomendado para perfil 3
 
 -- Inserindo investimentos
-INSERT INTO investimento (titulo, valor_aplicado, prazo_meses, rentabilidade, data_aplicacao, created_at, updated_at, uuid, investidor_id)
+INSERT INTO investimento (titulo, tipo, valor_aplicado, prazo_meses, rentabilidade, data_aplicacao, created_at, updated_at, uuid, investidor_id)
 VALUES
-('CDB Banco X - Aplicação 1', 1000.00, 12, 0.0125, GETDATE(), GETDATE(), GETDATE(), NEWID(), 1),
-('Tesouro Selic - Aplicação 1', 2000.00, 24, 0.0100, GETDATE(), GETDATE(), GETDATE(), NEWID(), 2);
+('CDB Banco X - Aplicação 1', 'CDB', 1000.00, 12, 0.0125, GETDATE(), GETDATE(), GETDATE(), NEWID(), 1),
+('Tesouro Selic - Aplicação 1', 'TESOURO', 2000.00, 24, 0.0100, GETDATE(), GETDATE(), GETDATE(), NEWID(), 2),
+('Fundo Agressivo Y - Aplicação 1', 'FUNDO', 1500.00, 18, 0.0250, GETDATE(), GETDATE(), GETDATE(), NEWID(), 3),
+('LCI Banco Z - Aplicação 1', 'LCI', 2500.00, 36, 0.0110, GETDATE(), GETDATE(), GETDATE(), NEWID(), 1),
+('Fundo Moderado W - Aplicação 1', 'FUNDO', 3000.00, 12, 0.0180, GETDATE(), GETDATE(), GETDATE(), NEWID(), 2),
+('LCA Banco Z - Aplicação 1', 'LCA', 1800.00, 24, 0.0200, GETDATE(), GETDATE(), GETDATE(), NEWID(), 3);
 
 ---- Inserindo simulações
 --INSERT INTO simulacao (produto, valor_investido, valor_final, prazo_meses, data_simulacao, created_at, updated_at, uuid, investidor_id)

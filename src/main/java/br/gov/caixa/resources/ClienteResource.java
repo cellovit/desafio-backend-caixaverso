@@ -64,4 +64,25 @@ public class ClienteResource extends AbstractResource {
         });
     }
 
+    @Tag(name = "Perfil de investidor pelo id do cliente", description = "Busca perfil de investidor pelo id do cliente")
+    @Operation(summary = "Busca perfil de investidor pelo id do cliente", description = "Busca perfil de investidor pelo id do cliente")
+    @APIResponse(responseCode = OK_200, description = "", content = @Content(schema = @Schema(implementation = PerfilRiscoResponseDto.class)))
+    @APIResponse(responseCode = BAD_REQUEST_400, description = BAD_REQUEST_DESCRIPTION, content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
+    @APIResponse(responseCode = INTERNAL_SERVER_ERROR_500, description = INTERNAL_SERVER_ERROR_DESCRIPTION, content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
+    @APIResponse(responseCode = TIMEOUT_524, description = TIMEOUT_DESCRIPTION, content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
+    @APIResponse(responseCode = UNAUTHORIZED_401, description = UNAUTHORIZED_DESCRIPTION, content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
+    @RunOnVirtualThread
+    @GET
+    @Path("/investimentos/{clienteId}")
+    public Response getInvestimentosPorInvestidor(
+            @NotNull
+            @PathParam("clienteId")
+            String clienteId
+    ) throws BusinessException {
+        return processAndLog(() -> {
+            return Response.ok(investidorService.getHistoricoInvestimentos(Long.parseLong(clienteId)))
+                    .build();
+        });
+    }
+
 }

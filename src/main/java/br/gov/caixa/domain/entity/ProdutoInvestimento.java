@@ -17,11 +17,11 @@ public class ProdutoInvestimento extends AbstractEntity {
 
     @NotNull
     @Column(name = "nome", nullable = false)
-    private String nome; // ex.: "CDB Banco X", "Tesouro Selic"
+    private String nome;
 
     @NotNull
     @Column(name = "tipo", nullable = false)
-    private String tipo; // renda fixa, renda variável, fundo, etc.
+    private String tipo;
 
     @NotNull
     @DecimalMin(value = "0.0", inclusive = true)
@@ -30,7 +30,7 @@ public class ProdutoInvestimento extends AbstractEntity {
 
     @NotNull
     @Column(name = "risco", nullable = false)
-    private String risco; // baixo, médio, alto
+    private String risco;
 
     @ManyToMany
     @JoinTable(

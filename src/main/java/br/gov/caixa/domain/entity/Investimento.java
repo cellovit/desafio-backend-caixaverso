@@ -20,6 +20,10 @@ public class Investimento extends AbstractEntity {
     @Column(name = "titulo", nullable = false)
     private String titulo;
 
+    @NotBlank
+    @Column(name = "tipo", nullable = false)
+    private String tipo;
+
     @NotNull
     @DecimalMin(value = "0.0", inclusive = true)
     @Column(name = "valor_aplicado", nullable = false, precision = 20, scale = 2)
