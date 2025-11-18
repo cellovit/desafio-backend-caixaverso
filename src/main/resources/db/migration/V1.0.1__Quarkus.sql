@@ -1,15 +1,16 @@
 -- Inserindo perfis de investidor
 INSERT INTO perfil_investidor (pontuacao, created_at, updated_at, uuid)
 VALUES
-(0.50, GETDATE(), GETDATE(), NEWID()),
-(0.75, GETDATE(), GETDATE(), NEWID()),
-(0.90, GETDATE(), GETDATE(), NEWID());
+(23.0, GETDATE(), GETDATE(), NEWID()),
+(58.0, GETDATE(), GETDATE(), NEWID()),
+(90.0, GETDATE(), GETDATE(), NEWID());
 
 -- Inserindo investidores
 INSERT INTO investidor (nome, created_at, updated_at, uuid, perfil_id)
 VALUES
 ('João Silva', GETDATE(), GETDATE(), NEWID(), 1),
-('Maria Souza', GETDATE(), GETDATE(), NEWID(), 2);
+('Maria Souza', GETDATE(), GETDATE(), NEWID(), 2),
+('Carlos Pereira', GETDATE(), GETDATE(), NEWID(), 3);
 
 -- Inserindo produtos de investimento
 INSERT INTO produto_investimento (nome, tipo, rentabilidade, risco, created_at, updated_at, uuid)

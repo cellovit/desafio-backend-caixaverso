@@ -6,14 +6,12 @@ import br.gov.caixa.dto.response.simulacao.HistoricoSimulacaoResponseDto;
 import br.gov.caixa.exception.BusinessException;
 import br.gov.caixa.exception.ErrorResponse;
 import br.gov.caixa.service.SimulacaoService;
-import com.fasterxml.jackson.annotation.JsonFormat;
 import io.quarkus.security.Authenticated;
 import io.smallrye.common.annotation.RunOnVirtualThread;
 import jakarta.inject.Inject;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotNull;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
@@ -25,9 +23,6 @@ import org.eclipse.microprofile.openapi.annotations.media.Schema;
 import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
 import org.eclipse.microprofile.openapi.annotations.security.SecurityRequirement;
 import org.eclipse.microprofile.openapi.annotations.tags.Tag;
-
-import java.time.LocalDate;
-import java.util.Objects;
 
 import static br.gov.caixa.domain.constants.HttpResponseCode.*;
 import static br.gov.caixa.domain.constants.HttpResponseDescription.*;
@@ -102,7 +97,7 @@ public class SimulacaoInvestimentoResource extends AbstractResource {
     @POST
     @Path("/simular-investimento")
     @RunOnVirtualThread
-    public Response simularInvestimento(@Valid SimularInvestimentoRequestDto requestDto) {
+    public Response simularInvestimento(@Valid SimularInvestimentoRequestDto requestDto) throws BusinessException {
         return processAndLog(() -> {
             return Response.ok(simulacaoService.simularInvestimento(requestDto)).build();
         });

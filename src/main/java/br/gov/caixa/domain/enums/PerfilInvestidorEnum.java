@@ -1,7 +1,14 @@
 package br.gov.caixa.domain.enums;
 
+import br.gov.caixa.service.strategy.CdbStrategy;
+import br.gov.caixa.service.strategy.FundoInvestimentoStrategy;
+import br.gov.caixa.service.strategy.LciStrategy;
+import br.gov.caixa.service.strategy.TesouroDiretoStrategy;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+
+import java.math.BigDecimal;
+import java.util.Optional;
 
 import static br.gov.caixa.domain.constants.ApiConstants.*;
 
@@ -14,5 +21,24 @@ public enum PerfilInvestidorEnum {
 
     private final String nome;
     private final String descricao;
-    private final Double pontuacao;
+    private final BigDecimal pontuacao;
+
+    public static PerfilInvestidorEnum fromNome(String nome) {
+        for (PerfilInvestidorEnum perfil : PerfilInvestidorEnum.values()) {
+            if (perfil.getNome().equalsIgnoreCase(nome)) {
+                return perfil;
+            }
+        }
+        throw new IllegalArgumentException("Perfil de investidor inválido: " + nome);
+    }
+
+    public static PerfilInvestidorEnum fromPontuacao(BigDecimal pontuacao) {
+        Optional<PerfilInvestidorEnum> perfil = Optional.of(CONSERVADOR);
+        for (PerfilInvestidorEnum p : PerfilInvestidorEnum.values()) {
+            if (pontuacao.compareTo(p.getPontuacao()) >= 0)  {
+                perfil = Optional.of(p);
+            }
+        }
+        return perfil.orElseThrow(() -> new IllegalArgumentException("Pontuação de investidor inválida: " + pontuacao));
+    }
 }

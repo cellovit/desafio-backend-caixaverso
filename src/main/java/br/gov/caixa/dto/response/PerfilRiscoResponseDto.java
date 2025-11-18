@@ -1,9 +1,12 @@
 package br.gov.caixa.dto.response;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Builder;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 
+@Builder
 public record PerfilRiscoResponseDto(
         @JsonProperty("clienteId")
         Long clienteId,
@@ -12,7 +15,7 @@ public record PerfilRiscoResponseDto(
         String perfilInvestidor,
 
         @JsonProperty("pontuacao")
-        Integer pontuacao,
+        BigDecimal pontuacao,
 
         @JsonProperty("descricao")
         String descricaoPerfilInvestidor
