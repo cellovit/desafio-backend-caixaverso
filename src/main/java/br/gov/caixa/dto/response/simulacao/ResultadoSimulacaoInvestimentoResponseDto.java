@@ -1,6 +1,6 @@
 package br.gov.caixa.dto.response.simulacao;
 
-import br.gov.caixa.dto.response.ProdutoRecomendadoResponseDto;
+import br.gov.caixa.dto.response.cliente.ProdutoRecomendadoResponseDto;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Builder;
 

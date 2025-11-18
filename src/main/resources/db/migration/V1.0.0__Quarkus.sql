@@ -22,6 +22,7 @@ IF NOT EXISTS (
 BEGIN
     CREATE TABLE dbo.perfil_investidor (
         id BIGINT IDENTITY(1,1) PRIMARY KEY,
+        titulo NVARCHAR(255) NOT NULL,
         pontuacao DECIMAL(5,2) NOT NULL,
         created_at DATETIME2 NULL,
         updated_at DATETIME2 NULL,

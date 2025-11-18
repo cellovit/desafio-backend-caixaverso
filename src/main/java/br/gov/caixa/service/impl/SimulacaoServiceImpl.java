@@ -1,6 +1,5 @@
 package br.gov.caixa.service.impl;
 
-import br.gov.caixa.domain.dao.SimulacaoPorDiaDao;
 import br.gov.caixa.domain.entity.Simulacao;
 import br.gov.caixa.domain.enums.BusinessExceptionEnum;
 import br.gov.caixa.domain.repository.CustomEntityRepository;
@@ -14,7 +13,7 @@ import br.gov.caixa.dto.response.simulacao.ResultadoSimulacaoInvestimentoRespons
 import br.gov.caixa.domain.dao.SimulacaoDao;
 import br.gov.caixa.dto.response.simulacao.SimulacaoProdutoDiaResponseDto;
 import br.gov.caixa.exception.BusinessException;
-import br.gov.caixa.mapper.ProdutoMapper;
+import br.gov.caixa.mapper.ProdutoInvestimentoMapper;
 import br.gov.caixa.mapper.SimulacaoMapper;
 import br.gov.caixa.service.SimulacaoService;
 import br.gov.caixa.service.context.SimulacaoInvestimentoContext;
@@ -25,7 +24,6 @@ import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.util.List;
 
 @Slf4j
@@ -45,7 +43,7 @@ public class SimulacaoServiceImpl implements SimulacaoService {
     SimulacaoInvestimentoStrategyFactory simulacaoInvestimentoStrategyFactory;
 
     @Inject
-    ProdutoMapper produtoMapper;
+    ProdutoInvestimentoMapper produtoInvestimentoMapper;
 
     @Inject
     SimulacaoMapper simulacaoMapper;
@@ -66,7 +64,7 @@ public class SimulacaoServiceImpl implements SimulacaoService {
         BigDecimal valorFinal = context.calcularValorFinal(strategy, requestDto.valor(), produtoInvestimento.getRentabilidade(), requestDto.prazomeses());
         BigDecimal rentabilidadeEfetiva = context.calcularRentabilidadeEfetiva(strategy, requestDto.valor(), valorFinal);
 
-        var produtoValidado = produtoMapper.toProdutoRecomendadoResponseDto(produtoInvestimento);
+        var produtoValidado = produtoInvestimentoMapper.toProdutoRecomendadoResponseDto(produtoInvestimento);
         var resultadoSimulacao = buildResultadoSimulacaoDto(valorFinal, rentabilidadeEfetiva, requestDto.prazomeses());
 
         var resultado = ResultadoSimulacaoInvestimentoResponseDto.builder()

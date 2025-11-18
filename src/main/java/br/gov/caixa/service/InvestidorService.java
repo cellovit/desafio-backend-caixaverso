@@ -1,7 +1,7 @@
 package br.gov.caixa.service;
 
-import br.gov.caixa.dto.response.HistoricoInvestimentoResponseDto;
-import br.gov.caixa.dto.response.PerfilRiscoResponseDto;
+import br.gov.caixa.dto.response.cliente.HistoricoInvestimentoResponseDto;
+import br.gov.caixa.dto.response.cliente.PerfilRiscoResponseDto;
 
 import java.util.List;
 

@@ -1,12 +1,12 @@
 package br.gov.caixa.resources;
 
 import br.gov.caixa.dto.PageParams;
-import br.gov.caixa.dto.response.PerfilRiscoResponseDto;
-import br.gov.caixa.dto.response.simulacao.HistoricoSimulacaoResponseDto;
+import br.gov.caixa.dto.response.cliente.HistoricoInvestimentoResponseDto;
+import br.gov.caixa.dto.response.cliente.PerfilRiscoResponseDto;
 import br.gov.caixa.exception.BusinessException;
 import br.gov.caixa.exception.ErrorResponse;
 import br.gov.caixa.service.InvestidorService;
-import br.gov.caixa.service.SimulacaoService;
+import br.gov.caixa.service.ProdutoInvestimentoService;
 import io.quarkus.security.Authenticated;
 import io.smallrye.common.annotation.RunOnVirtualThread;
 import jakarta.inject.Inject;
@@ -38,10 +38,13 @@ import static br.gov.caixa.domain.constants.HttpResponseDescription.UNAUTHORIZED
 @Path("")
 @Authenticated
 @SecurityRequirement(name = "Keycloak")
-public class ClienteResource extends AbstractResource {
+public class InvestidorResource extends AbstractResource {
 
     @Inject
     InvestidorService investidorService;
+
+    @Inject
+    ProdutoInvestimentoService produtoInvestimentoService;
 
     @Tag(name = "Perfil de investidor pelo id do cliente", description = "Busca perfil de investidor pelo id do cliente")
     @Operation(summary = "Busca perfil de investidor pelo id do cliente", description = "Busca perfil de investidor pelo id do cliente")
@@ -64,9 +67,9 @@ public class ClienteResource extends AbstractResource {
         });
     }
 
-    @Tag(name = "Perfil de investidor pelo id do cliente", description = "Busca perfil de investidor pelo id do cliente")
-    @Operation(summary = "Busca perfil de investidor pelo id do cliente", description = "Busca perfil de investidor pelo id do cliente")
-    @APIResponse(responseCode = OK_200, description = "", content = @Content(schema = @Schema(implementation = PerfilRiscoResponseDto.class)))
+    @Tag(name = "Histórico de investimentos pelo id do cliente", description = "Histórico de investimentos pelo id do cliente")
+    @Operation(summary = "Busca histórico de investimentos pelo id do cliente", description = "Busca histórico de investimentos pelo id do cliente")
+    @APIResponse(responseCode = OK_200, description = "", content = @Content(schema = @Schema(implementation = HistoricoInvestimentoResponseDto.class)))
     @APIResponse(responseCode = BAD_REQUEST_400, description = BAD_REQUEST_DESCRIPTION, content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
     @APIResponse(responseCode = INTERNAL_SERVER_ERROR_500, description = INTERNAL_SERVER_ERROR_DESCRIPTION, content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
     @APIResponse(responseCode = TIMEOUT_524, description = TIMEOUT_DESCRIPTION, content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
@@ -81,6 +84,38 @@ public class ClienteResource extends AbstractResource {
     ) throws BusinessException {
         return processAndLog(() -> {
             return Response.ok(investidorService.getHistoricoInvestimentos(Long.parseLong(clienteId)))
+                    .build();
+        });
+    }
+
+    @Tag(name = "Histórico de investimentos pelo id do cliente", description = "Histórico de investimentos pelo id do cliente")
+    @Operation(summary = "Busca histórico de investimentos pelo id do cliente", description = "Busca histórico de investimentos pelo id do cliente")
+    @APIResponse(responseCode = OK_200, description = "", content = @Content(schema = @Schema(implementation = HistoricoInvestimentoResponseDto.class)))
+    @APIResponse(responseCode = BAD_REQUEST_400, description = BAD_REQUEST_DESCRIPTION, content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
+    @APIResponse(responseCode = INTERNAL_SERVER_ERROR_500, description = INTERNAL_SERVER_ERROR_DESCRIPTION, content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
+    @APIResponse(responseCode = TIMEOUT_524, description = TIMEOUT_DESCRIPTION, content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
+    @APIResponse(responseCode = UNAUTHORIZED_401, description = UNAUTHORIZED_DESCRIPTION, content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
+    @RunOnVirtualThread
+    @GET
+    @Path("/produtos-recomendados/{perfil}")
+    public Response getProdutosRecomendadosPorPerfil(
+            @QueryParam("page")
+            @DefaultValue("1")
+            @Min(1)
+            String page,
+
+            @QueryParam("pageSize")
+            @DefaultValue("10")
+            @Max(100)
+            String pageSize,
+
+            @NotNull
+            @PathParam("perfil")
+            String perfil
+    ) throws BusinessException {
+        return processAndLog(() -> {
+            var pageParams = new PageParams(Integer.parseInt(page), Integer.parseInt(pageSize));
+            return Response.ok(produtoInvestimentoService.buscarProdutosRecomendadosPorPerfil(perfil, pageParams))
                     .build();
         });
     }

@@ -1,9 +1,9 @@
 -- Inserindo perfis de investidor
-INSERT INTO perfil_investidor (pontuacao, created_at, updated_at, uuid)
+INSERT INTO perfil_investidor (pontuacao, titulo, created_at, updated_at, uuid)
 VALUES
-(23.0, GETDATE(), GETDATE(), NEWID()),
-(58.0, GETDATE(), GETDATE(), NEWID()),
-(90.0, GETDATE(), GETDATE(), NEWID());
+(23.0, 'Conservador', GETDATE(), GETDATE(), NEWID()),
+(58.0, 'Moderado', GETDATE(), GETDATE(), NEWID()),
+(90.0, 'Agressivo', GETDATE(), GETDATE(), NEWID());
 
 -- Inserindo investidores
 INSERT INTO investidor (nome, created_at, updated_at, uuid, perfil_id)
@@ -20,7 +20,9 @@ VALUES
 ('Fundo Agressivo Y', 'FUNDO', 0.0250, 'Alto', GETDATE(), GETDATE(), NEWID()),
 ('LCI Banco Z', 'LCI', 0.0110, 'Baixo', GETDATE(), GETDATE(), NEWID()),
 ('Fundo Moderado W', 'FUNDO', 0.0180, 'Médio', GETDATE(), GETDATE(), NEWID()),
-('LCA Banco Z', 'LCA', 0.0200, 'Baixo', GETDATE(), GETDATE(), NEWID());
+('LCA Banco Z', 'LCA', 0.0200, 'Baixo', GETDATE(), GETDATE(), NEWID()),
+('Ação de Empresa nova', 'ACAO', 0.2500, 'Alto', GETDATE(), GETDATE(), NEWID()),
+('Ação de Empresa consolidada', 'ACAO', 0.1500, 'Alto', GETDATE(), GETDATE(), NEWID());
 
 -- Inserindo relação produto-perfil (N:N)
 INSERT INTO produto_perfil (produto_id, perfil_id)

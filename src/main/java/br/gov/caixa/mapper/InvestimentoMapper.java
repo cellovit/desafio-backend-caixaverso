@@ -1,7 +1,7 @@
 package br.gov.caixa.mapper;
 
 import br.gov.caixa.domain.entity.Investimento;
-import br.gov.caixa.dto.response.HistoricoInvestimentoResponseDto;
+import br.gov.caixa.dto.response.cliente.HistoricoInvestimentoResponseDto;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 

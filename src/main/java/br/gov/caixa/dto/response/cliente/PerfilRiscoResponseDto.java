@@ -1,4 +1,4 @@
-package br.gov.caixa.dto.response;
+package br.gov.caixa.dto.response.cliente;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Builder;

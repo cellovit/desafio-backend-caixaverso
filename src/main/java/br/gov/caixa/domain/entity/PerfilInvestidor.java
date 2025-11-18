@@ -15,6 +15,9 @@ import java.util.List;
 @Table(name = "perfil_investidor")
 public class PerfilInvestidor extends AbstractEntity {
 
+    @Column(name = "titulo")
+    private String titulo;
+
     @NotNull
     @DecimalMin(value = "0.0", inclusive = true)
     @Column(name = "pontuacao", nullable = false, precision = 3, scale = 2)
