@@ -1,22 +1,24 @@
 package br.gov.caixa.service.impl;
 
+import br.gov.caixa.domain.dao.SimulacaoPorDiaDao;
 import br.gov.caixa.domain.entity.Simulacao;
 import br.gov.caixa.domain.enums.BusinessExceptionEnum;
+import br.gov.caixa.domain.repository.CustomEntityRepository;
 import br.gov.caixa.domain.repository.InvestidorRepository;
 import br.gov.caixa.domain.repository.ProdutoInvestimentoRepository;
 import br.gov.caixa.dto.PageParams;
 import br.gov.caixa.dto.request.SimularInvestimentoRequestDto;
-import br.gov.caixa.dto.response.HistoricoSimulacaoResponseDto;
-import br.gov.caixa.dto.response.ResultadoSimulacaoDto;
-import br.gov.caixa.dto.response.ResultadoSimulacaoInvestimentoResponseDto;
+import br.gov.caixa.dto.response.simulacao.HistoricoSimulacaoResponseDto;
+import br.gov.caixa.dto.response.simulacao.ResultadoSimulacaoDto;
+import br.gov.caixa.dto.response.simulacao.ResultadoSimulacaoInvestimentoResponseDto;
 import br.gov.caixa.domain.dao.SimulacaoDao;
+import br.gov.caixa.dto.response.simulacao.SimulacaoProdutoDiaResponseDto;
 import br.gov.caixa.exception.BusinessException;
 import br.gov.caixa.mapper.ProdutoMapper;
 import br.gov.caixa.mapper.SimulacaoMapper;
 import br.gov.caixa.service.SimulacaoService;
 import br.gov.caixa.service.context.SimulacaoInvestimentoContext;
 import br.gov.caixa.service.strategy.factory.SimulacaoInvestimentoStrategyFactory;
-import io.opentelemetry.instrumentation.annotations.WithSpan;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
@@ -25,7 +27,6 @@ import lombok.extern.slf4j.Slf4j;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
-import java.util.concurrent.CompletableFuture;
 
 @Slf4j
 @ApplicationScoped
@@ -51,6 +52,9 @@ public class SimulacaoServiceImpl implements SimulacaoService {
 
     @Inject
     InvestidorRepository investidorRepository;
+
+    @Inject
+    CustomEntityRepository customEntityRepository;
 
     @Override
     @Transactional
@@ -83,9 +87,9 @@ public class SimulacaoServiceImpl implements SimulacaoService {
     }
 
     @Override
-    public List<HistoricoSimulacaoResponseDto> obterHistoricoSimulacoesPorProdutoDia(String produto, LocalDate dataInicio, LocalDate dataFim, PageParams pageParams) {
-        return simulacaoDao.findPaginadoPorProdutoDia(produto, dataInicio, dataFim, pageParams)
-                .stream().map(simulacaoMapper::toHistoricoSimulacaoResponseDto)
+    public List<SimulacaoProdutoDiaResponseDto> obterHistoricoSimulacoesPorProdutoDia(PageParams pageParams) {
+        return customEntityRepository.simulacaoPorProdutoDia(pageParams)
+                .stream().map(simulacaoMapper::queryResultToResponse)
                 .toList();
     }
 

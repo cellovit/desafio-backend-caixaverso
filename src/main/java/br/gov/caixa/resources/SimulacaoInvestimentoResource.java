@@ -2,7 +2,7 @@ package br.gov.caixa.resources;
 
 import br.gov.caixa.dto.PageParams;
 import br.gov.caixa.dto.request.SimularInvestimentoRequestDto;
-import br.gov.caixa.dto.response.HistoricoSimulacaoResponseDto;
+import br.gov.caixa.dto.response.simulacao.HistoricoSimulacaoResponseDto;
 import br.gov.caixa.exception.BusinessException;
 import br.gov.caixa.exception.ErrorResponse;
 import br.gov.caixa.service.SimulacaoService;
@@ -27,6 +27,7 @@ import org.eclipse.microprofile.openapi.annotations.security.SecurityRequirement
 import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 
 import java.time.LocalDate;
+import java.util.Objects;
 
 import static br.gov.caixa.domain.constants.HttpResponseCode.*;
 import static br.gov.caixa.domain.constants.HttpResponseDescription.*;
@@ -89,25 +90,12 @@ public class SimulacaoInvestimentoResource extends AbstractResource {
             @QueryParam("pageSize")
             @DefaultValue("10")
             @Max(100)
-            String pageSize,
-
-            @NotNull
-            @QueryParam("produto")
-            String produto,
-
-            @QueryParam("dataInicio")
-            @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-            @DefaultValue("0001-01-01")
-            LocalDate dataInicio,
-
-            @QueryParam("dataFim")
-            @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-            @DefaultValue("9999-12-31")
-            LocalDate dataFim
+            String pageSize
     ) throws BusinessException {
         return processAndLog(() -> {
             var pageParams = new PageParams(Integer.parseInt(page), Integer.parseInt(pageSize));
-            return Response.ok(simulacaoService.obterHistoricoSimulacoesPorProdutoDia(produto, dataInicio, dataFim, pageParams)).build();
+            return Response.ok(simulacaoService.obterHistoricoSimulacoesPorProdutoDia(pageParams))
+                    .build();
         });
     }
 

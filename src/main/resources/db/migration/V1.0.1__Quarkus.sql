@@ -34,8 +34,9 @@ VALUES
 ('CDB Banco X - Aplicação 1', 1000.00, 12, 0.0125, GETDATE(), GETDATE(), GETDATE(), NEWID(), 1),
 ('Tesouro Selic - Aplicação 1', 2000.00, 24, 0.0100, GETDATE(), GETDATE(), GETDATE(), NEWID(), 2);
 
--- Inserindo simulações
-INSERT INTO simulacao (produto, valor_investido, valor_final, prazo_meses, data_simulacao, created_at, updated_at, uuid, investidor_id)
-VALUES
-('CDB Banco X', 1500.00, 1700.00, 12, GETDATE(), GETDATE(), GETDATE(), NEWID(), 1),
-('Fundo Agressivo Y', 3000.00, 4000.00, 18, GETDATE(), GETDATE(), GETDATE(), NEWID(), 2);
+---- Inserindo simulações
+--INSERT INTO simulacao (produto, valor_investido, valor_final, prazo_meses, data_simulacao, created_at, updated_at, uuid, investidor_id)
+--VALUES
+--('CDB Banco X', 1500.00, 1700.00, 12, GETDATE(), GETDATE(), GETDATE(), NEWID(), 1),
+--('Fundo Agressivo Y', 3000.00, 4000.00, 18, GETDATE(), GETDATE(), GETDATE(), NEWID(), 2),
+--('CDB Banco X', 2500.00, 2800.00, 24, GETDATE(), GETDATE(), GETDATE(), NEWID(), 1);

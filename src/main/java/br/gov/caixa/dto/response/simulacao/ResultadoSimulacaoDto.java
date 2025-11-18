@@ -1,4 +1,4 @@
-package br.gov.caixa.dto.response;
+package br.gov.caixa.dto.response.simulacao;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

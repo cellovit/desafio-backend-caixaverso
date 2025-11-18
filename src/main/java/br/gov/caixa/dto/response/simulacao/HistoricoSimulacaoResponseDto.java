@@ -1,11 +1,10 @@
-package br.gov.caixa.dto.response;
+package br.gov.caixa.dto.response.simulacao;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.time.LocalDate;
 import java.time.LocalDate;
 
 public record HistoricoSimulacaoResponseDto(
