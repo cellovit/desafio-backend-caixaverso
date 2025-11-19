@@ -11,5 +11,10 @@ import java.util.Optional;
 @Slf4j
 public class PerfilInvestidorDao implements PerfilInvestidorRepository {
 
+    @Override
+    public Optional<PerfilInvestidor> buscarPorPerfilPorTitulo(String titulo) {
+        return find("titulo", titulo)
+                .firstResultOptional();
+    }
 
 }

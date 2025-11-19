@@ -1,9 +1,6 @@
 package br.gov.caixa.domain.enums;
 
-import br.gov.caixa.service.strategy.CdbStrategy;
-import br.gov.caixa.service.strategy.FundoInvestimentoStrategy;
-import br.gov.caixa.service.strategy.LciStrategy;
-import br.gov.caixa.service.strategy.TesouroDiretoStrategy;
+import br.gov.caixa.exception.BusinessException;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -19,26 +16,27 @@ public enum PerfilInvestidorEnum {
     MODERADO(TITULO_PERFIL_MODERADO, "Equilíbrio entre liquidez e rentabilidade", PONTUACAO_PERFIL_MODERADO),
     AGRESSIVO(TITULO_PERFIL_AGRESSIVO, "Busca por alta rentabilidade, maior risco", PONTUACAO_PERFIL_AGRESSIVO);
 
-    private final String nome;
+    private final String titulo;
     private final String descricao;
-    private final BigDecimal pontuacao;
+    private final BigDecimal limiarPontuacao;
 
     public static PerfilInvestidorEnum fromNome(String nome) {
         for (PerfilInvestidorEnum perfil : PerfilInvestidorEnum.values()) {
-            if (perfil.getNome().equalsIgnoreCase(nome)) {
+            if (perfil.getTitulo().equalsIgnoreCase(nome)) {
                 return perfil;
             }
         }
         throw new IllegalArgumentException("Perfil de investidor inválido: " + nome);
     }
 
-    public static PerfilInvestidorEnum fromPontuacao(BigDecimal pontuacao) {
+    public static PerfilInvestidorEnum fromLimiarPontuacao(BigDecimal pontuacao) {
         Optional<PerfilInvestidorEnum> perfil = Optional.of(CONSERVADOR);
         for (PerfilInvestidorEnum p : PerfilInvestidorEnum.values()) {
-            if (pontuacao.compareTo(p.getPontuacao()) >= 0)  {
+            if (pontuacao.compareTo(p.getLimiarPontuacao()) >= 0)  {
                 perfil = Optional.of(p);
             }
         }
-        return perfil.orElseThrow(() -> new IllegalArgumentException("Pontuação de investidor inválida: " + pontuacao));
+        // ("Pontuação de investidor inválida: " + pontuacao)
+        return perfil.orElseThrow(() -> new BusinessException(BusinessExceptionEnum.ILLEGAL_ARGUMENT));
     }
 }

@@ -48,11 +48,11 @@ public class InvestidorServiceImpl implements InvestidorService {
 
     private PerfilRiscoResponseDto buildPerfilRiscoResponseDto(Investidor investidor) {
         BigDecimal pontuacao = investidor.getPerfilInvestidor().getPontuacao();
-        var perfilEnum = PerfilInvestidorEnum.fromPontuacao(pontuacao);
+        var perfilEnum = PerfilInvestidorEnum.fromLimiarPontuacao(pontuacao);
 
         return PerfilRiscoResponseDto.builder()
                 .clienteId(investidor.getId())
-                .perfilInvestidor(perfilEnum.getNome())
+                .perfilInvestidor(perfilEnum.getTitulo())
                 .descricaoPerfilInvestidor(perfilEnum.getDescricao())
                 .pontuacao(pontuacao)
                 .build();

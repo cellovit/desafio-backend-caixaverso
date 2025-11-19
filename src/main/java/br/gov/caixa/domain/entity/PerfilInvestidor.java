@@ -1,5 +1,6 @@
 package br.gov.caixa.domain.entity;
 
+import br.gov.caixa.domain.enums.PerfilInvestidorEnum;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotNull;
@@ -16,7 +17,8 @@ import java.util.List;
 public class PerfilInvestidor extends AbstractEntity {
 
     @Column(name = "titulo")
-    private String titulo;
+    @Enumerated(EnumType.STRING)
+    private PerfilInvestidorEnum titulo;
 
     @NotNull
     @DecimalMin(value = "0.0", inclusive = true)

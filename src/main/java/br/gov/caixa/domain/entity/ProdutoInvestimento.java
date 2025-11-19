@@ -1,5 +1,7 @@
 package br.gov.caixa.domain.entity;
 
+import br.gov.caixa.domain.enums.RiscoInvestimentoEnum;
+import br.gov.caixa.domain.enums.TipoProdutoInvestimentoEnum;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotNull;
@@ -20,8 +22,9 @@ public class ProdutoInvestimento extends AbstractEntity {
     private String nome;
 
     @NotNull
+    @Enumerated(EnumType.STRING)
     @Column(name = "tipo", nullable = false)
-    private String tipo;
+    private TipoProdutoInvestimentoEnum tipo;
 
     @NotNull
     @DecimalMin(value = "0.0", inclusive = true)
@@ -29,8 +32,9 @@ public class ProdutoInvestimento extends AbstractEntity {
     private BigDecimal rentabilidade;
 
     @NotNull
+    @Enumerated(EnumType.STRING)
     @Column(name = "risco", nullable = false)
-    private String risco;
+    private RiscoInvestimentoEnum risco;
 
     @ManyToMany
     @JoinTable(
