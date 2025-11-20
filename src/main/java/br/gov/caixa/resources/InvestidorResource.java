@@ -33,7 +33,7 @@ import static br.gov.caixa.domain.constants.HttpResponseDescription.*;
 import static br.gov.caixa.domain.constants.HttpResponseDescription.UNAUTHORIZED_DESCRIPTION;
 
 @Slf4j
-@Timeout(1000000)
+@Timeout(10000)
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 @Path("")

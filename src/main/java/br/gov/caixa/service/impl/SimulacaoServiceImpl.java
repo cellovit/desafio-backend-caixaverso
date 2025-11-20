@@ -31,7 +31,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static br.gov.caixa.util.RiscoInvestimentoUtil.defineRiscoPorPerfil;
+import static br.gov.caixa.util.SimulacaoUtil.defineRiscoPorPerfil;
 
 @Slf4j
 @ApplicationScoped

@@ -24,7 +24,7 @@ public class PerfilInvestidor extends AbstractEntity {
 
     @NotNull
     @DecimalMin(value = "0.0", inclusive = true)
-    @Column(name = "pontuacao", nullable = false, precision = 3, scale = 2)
+    @Column(name = "pontuacao", nullable = false, precision = 5, scale = 2)
     private BigDecimal pontuacao;
 
     @OneToOne(mappedBy = "perfilInvestidor")

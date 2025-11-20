@@ -8,6 +8,7 @@ import jakarta.ws.rs.container.ContainerRequestFilter;
 import jakarta.ws.rs.container.ContainerResponseContext;
 import jakarta.ws.rs.container.ContainerResponseFilter;
 import jakarta.ws.rs.ext.Provider;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.time.StopWatch;
 
@@ -29,9 +30,10 @@ public class TelemetryRequestFilter implements ContainerRequestFilter, Container
     }
 
     @Override
+    @SneakyThrows
     public void filter(ContainerRequestContext requestContext, ContainerResponseContext responseContext) {
         StopWatch stopWatch = stopWatchThreadLocal.get();
-        if (stopWatch != null) {
+        if (stopWatch.isStarted()) {
             stopWatch.stop();
             salvaRequisicao(stopWatch.getTime(), buildEndpointString(requestContext));
             stopWatchThreadLocal.remove();

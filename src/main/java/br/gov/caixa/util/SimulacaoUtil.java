@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 
 @ApplicationScoped
 @Slf4j
-public class RiscoInvestimentoUtil {
+public class SimulacaoUtil {
     public static List<RiscoInvestimentoEnum> defineRiscoPorPerfil(PerfilInvestidorEnum perfil) {
         return switch (perfil) {
             case CONSERVADOR -> List.of(RiscoInvestimentoEnum.BAIXO);

@@ -1,5 +1,3 @@
--- V1__create_tables.sql
-
 IF NOT EXISTS (
     SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[produto_investimento]') AND type = N'U'
 )
@@ -34,8 +32,6 @@ IF NOT EXISTS (
     SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[investidor]') AND type = N'U'
 )
 BEGIN
-
-
     CREATE TABLE dbo.investidor (
         id BIGINT IDENTITY(1,1) PRIMARY KEY,
         nome NVARCHAR(255) NOT NULL,
@@ -43,7 +39,6 @@ BEGIN
         updated_at DATETIME2 NULL,
         uuid NVARCHAR(36) NOT NULL,
         perfil_id BIGINT NULL,
---        CONSTRAINT idx_col1 UNIQUE(perfil_id),
         CONSTRAINT fk_investidor_perfil FOREIGN KEY (perfil_id)
             REFERENCES perfil_investidor (id)
             ON DELETE CASCADE
@@ -102,7 +97,7 @@ IF NOT EXISTS (
 )
 BEGIN
     CREATE TABLE dbo.telemetry_metrics (
-        id BIGINT IDENTITY(1,1) PRIMARY KEY, -- herdado de AbstractEntity (chave primária)
+        id BIGINT IDENTITY(1,1) PRIMARY KEY,
         endpoint NVARCHAR(255) NOT NULL,
         tempo_resposta DECIMAL(20,2) NOT NULL,
         data_coleta DATETIME2 NOT NULL,

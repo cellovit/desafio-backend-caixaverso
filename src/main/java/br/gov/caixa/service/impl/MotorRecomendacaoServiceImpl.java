@@ -4,7 +4,6 @@ import br.gov.caixa.domain.enums.BusinessExceptionEnum;
 import br.gov.caixa.domain.enums.FocoProdutoInvestimentoEnum;
 import br.gov.caixa.domain.enums.PerfilInvestidorEnum;
 import br.gov.caixa.domain.repository.InvestidorRepository;
-import br.gov.caixa.domain.repository.ProdutoInvestimentoRepository;
 import br.gov.caixa.exception.BusinessException;
 import br.gov.caixa.service.MotorRecomendacaoService;
 import jakarta.enterprise.context.ApplicationScoped;
@@ -13,7 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.math.BigDecimal;
 
-import static br.gov.caixa.util.RiscoInvestimentoUtil.*;
+import static br.gov.caixa.util.SimulacaoUtil.*;
 
 @ApplicationScoped
 @Slf4j

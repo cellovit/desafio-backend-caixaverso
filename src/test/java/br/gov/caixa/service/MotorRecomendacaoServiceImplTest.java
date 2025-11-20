@@ -4,10 +4,9 @@ import br.gov.caixa.domain.entity.Investidor;
 import br.gov.caixa.domain.entity.Investimento;
 import br.gov.caixa.domain.enums.*;
 import br.gov.caixa.domain.repository.InvestidorRepository;
-import br.gov.caixa.domain.repository.ProdutoInvestimentoRepository;
 import br.gov.caixa.exception.BusinessException;
 import br.gov.caixa.service.impl.MotorRecomendacaoServiceImpl;
-import br.gov.caixa.util.RiscoInvestimentoUtil;
+import br.gov.caixa.util.SimulacaoUtil;
 import io.quarkus.test.InjectMock;
 import io.quarkus.test.junit.QuarkusTest;
 import jakarta.inject.Inject;
@@ -45,11 +44,11 @@ public class MotorRecomendacaoServiceImplTest {
 
         when(investidorRepository.findByIdOptional(anyLong())).thenReturn(Optional.of(investidor));
 
-        try (MockedStatic<RiscoInvestimentoUtil> utilities = Mockito.mockStatic(RiscoInvestimentoUtil.class)) {
-            utilities.when(() -> RiscoInvestimentoUtil.calculaIncidenciaTipoInvestimento(any()))
+        try (MockedStatic<SimulacaoUtil> utilities = Mockito.mockStatic(SimulacaoUtil.class)) {
+            utilities.when(() -> SimulacaoUtil.calculaIncidenciaTipoInvestimento(any()))
                     .thenReturn(RiscoInvestimentoEnum.BAIXO);
-            utilities.when(() -> RiscoInvestimentoUtil.calculaPontuacaoPorTipoinvestimento(any())).thenReturn(5.0);
-            utilities.when(() -> RiscoInvestimentoUtil.calculaFoco(any())).thenReturn(FocoProdutoInvestimentoEnum.LIQUIDEZ);
+            utilities.when(() -> SimulacaoUtil.calculaPontuacaoPorTipoinvestimento(any())).thenReturn(5.0);
+            utilities.when(() -> SimulacaoUtil.calculaFoco(any())).thenReturn(FocoProdutoInvestimentoEnum.LIQUIDEZ);
 
             PerfilInvestidorEnum perfil = motorRecomendacaoService.calcularPerfil(1L);
 

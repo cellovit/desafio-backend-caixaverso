@@ -19,7 +19,7 @@ import org.eclipse.microprofile.openapi.annotations.security.SecurityRequirement
 import java.time.LocalDate;
 
 @Slf4j
-@Timeout(5000)
+@Timeout(10000)
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 @Path("/telemetria")

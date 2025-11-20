@@ -21,7 +21,7 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
-import static br.gov.caixa.util.RiscoInvestimentoUtil.calculaPontuacaoFinalInvestidor;
+import static br.gov.caixa.util.SimulacaoUtil.calculaPontuacaoFinalInvestidor;
 
 @Slf4j
 @ApplicationScoped
@@ -74,6 +74,10 @@ public class InvestidorServiceImpl implements InvestidorService {
     @Override
     public List<HistoricoInvestimentoResponseDto> getHistoricoInvestimentos(Long clienteId) {
         log.info("Buscando histórico de investimentos do investidor pelo id do cliente: {}", clienteId);
+
+        var listAll = investidorRepository.listAll();
+        log.info("ALL1: {}", listAll);
+
         var investidor = investidorRepository.findByIdOptional(clienteId)
                 .orElseThrow(() -> new BusinessException(BusinessExceptionEnum.NOT_FOUND));
 
