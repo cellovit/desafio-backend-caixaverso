@@ -30,7 +30,6 @@ public class TelemetryRequestFilter implements ContainerRequestFilter, Container
     }
 
     @Override
-    @SneakyThrows
     public void filter(ContainerRequestContext requestContext, ContainerResponseContext responseContext) {
         StopWatch stopWatch = stopWatchThreadLocal.get();
         if (stopWatch.isStarted()) {

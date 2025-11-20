@@ -11,7 +11,6 @@ public class CriCraStrategy implements CalculadoraInvestimentoStrategy {
 
     @Override
     public BigDecimal calcularValorFinal(BigDecimal valorAplicado, BigDecimal rentabilidade, int prazoMeses) {
-        // Fórmula: valorAplicado * (1 + rentabilidade)^prazoMeses
         return valorAplicado.multiply(
                 BigDecimal.valueOf(Math.pow(1 + rentabilidade.doubleValue(), prazoMeses))
         ).setScale(2, RoundingMode.HALF_UP);
@@ -19,7 +18,6 @@ public class CriCraStrategy implements CalculadoraInvestimentoStrategy {
 
     @Override
     public BigDecimal calcularRentabilidadeEfetiva(BigDecimal valorAplicado, BigDecimal valorFinal) {
-        // Fórmula: (valorFinal - valorAplicado) / valorAplicado
         return valorFinal.subtract(valorAplicado)
                 .divide(valorAplicado, 4, RoundingMode.HALF_UP);
     }

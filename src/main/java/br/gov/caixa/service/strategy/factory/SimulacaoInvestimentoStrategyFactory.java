@@ -13,7 +13,6 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class SimulacaoInvestimentoStrategyFactory {
 
-    // TODO: talvez implementar uma abstractfactory para renda fixa e renda variavel
     public static CalculadoraInvestimentoStrategy getStrategy(TipoProdutoInvestimentoEnum tipoProduto) {
         return switch (tipoProduto) {
             case CDB -> new CdbStrategy();
@@ -27,7 +26,6 @@ public class SimulacaoInvestimentoStrategyFactory {
             case ETF -> new EtfStrategy();
             case CRIPTOMOEDA -> new CriptoMoedaStrategy();
             case ACAO -> new AcaoStrategy();
-//            default -> throw new IllegalArgumentException("Tipo de produto não suportado: " + tipoProduto);
         };
     }
 
