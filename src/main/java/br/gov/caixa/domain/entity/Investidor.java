@@ -18,7 +18,7 @@ public class Investidor extends AbstractEntity {
     private String nome;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "perfil_id", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "perfil_id", referencedColumnName = "id")
     private PerfilInvestidor perfilInvestidor;
 
     @OneToMany(mappedBy = "investidor", cascade = CascadeType.ALL, orphanRemoval = true)

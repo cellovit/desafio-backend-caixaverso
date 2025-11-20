@@ -1,5 +1,6 @@
 package br.gov.caixa.service.impl;
 
+import br.gov.caixa.domain.enums.PerfilInvestidorEnum;
 import br.gov.caixa.domain.repository.ProdutoInvestimentoRepository;
 import br.gov.caixa.dto.PageParams;
 import br.gov.caixa.dto.response.cliente.ProdutoRecomendadoResponseDto;
@@ -10,6 +11,9 @@ import jakarta.inject.Inject;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
+import java.util.stream.Collectors;
+
+import static br.gov.caixa.util.RiscoInvestimentoUtil.defineRiscoPorPerfil;
 
 @ApplicationScoped
 @Slf4j
@@ -22,10 +26,13 @@ public class ProdutoInvestimentoServiceImpl implements ProdutoInvestimentoServic
     ProdutoInvestimentoMapper mapper;
 
     @Override
-    public List<ProdutoRecomendadoResponseDto> buscarProdutosRecomendadosPorPerfil(String perfilString, PageParams pageParams) {
-        return produtoInvestimentoRepository.findByPerfil(perfilString, pageParams)
-                .stream().map(mapper::toProdutoRecomendadoResponseDto)
-                .toList();
+    public List<ProdutoRecomendadoResponseDto> buscarProdutosRecomendadosPorPerfil(PerfilInvestidorEnum perfilEnum, PageParams pageParams) {
+        var risco = defineRiscoPorPerfil(perfilEnum);
+        return risco.stream()
+                .flatMap(r -> produtoInvestimentoRepository.findByRisco(r, pageParams).stream())
+                .map(mapper::toProdutoRecomendadoResponseDto)
+                .collect(Collectors.toList());
+
     }
 
 }

@@ -36,12 +36,12 @@ public class ProdutoInvestimento extends AbstractEntity {
     @Column(name = "risco", nullable = false)
     private RiscoInvestimentoEnum risco;
 
-    @ManyToMany
-    @JoinTable(
-            name = "produto_perfil",
-            joinColumns = @JoinColumn(name = "produto_id"),
-            inverseJoinColumns = @JoinColumn(name = "perfil_id")
-    )
-    private List<PerfilInvestidor> perfis;
+//    @ManyToMany
+//    @JoinTable(
+//            name = "produto_perfil",
+//            joinColumns = @JoinColumn(name = "produto_id"),
+//            inverseJoinColumns = @JoinColumn(name = "perfil_id")
+//    )
+//    private List<PerfilInvestidor> perfis;
 
 }

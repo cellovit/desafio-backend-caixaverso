@@ -1,5 +1,6 @@
 package br.gov.caixa.resources;
 
+import br.gov.caixa.domain.enums.PerfilInvestidorEnum;
 import br.gov.caixa.dto.PageParams;
 import br.gov.caixa.dto.response.cliente.HistoricoInvestimentoResponseDto;
 import br.gov.caixa.dto.response.cliente.PerfilRiscoResponseDto;
@@ -32,7 +33,7 @@ import static br.gov.caixa.domain.constants.HttpResponseDescription.*;
 import static br.gov.caixa.domain.constants.HttpResponseDescription.UNAUTHORIZED_DESCRIPTION;
 
 @Slf4j
-@Timeout(10000)
+@Timeout(1000000)
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 @Path("")
@@ -111,7 +112,7 @@ public class InvestidorResource extends AbstractResource {
 
             @NotNull
             @PathParam("perfil")
-            String perfil
+            PerfilInvestidorEnum perfil
     ) throws BusinessException {
         return processAndLog(() -> {
             var pageParams = new PageParams(Integer.parseInt(page), Integer.parseInt(pageSize));

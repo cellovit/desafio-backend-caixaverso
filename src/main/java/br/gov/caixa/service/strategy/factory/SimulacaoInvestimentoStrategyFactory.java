@@ -1,10 +1,11 @@
 package br.gov.caixa.service.strategy.factory;
 
-import br.gov.caixa.service.strategy.CdbStrategy;
-import br.gov.caixa.service.strategy.FundoInvestimentoStrategy;
-import br.gov.caixa.service.strategy.LciStrategy;
-import br.gov.caixa.service.strategy.TesouroDiretoStrategy;
+import br.gov.caixa.domain.enums.TipoProdutoInvestimentoEnum;
+import br.gov.caixa.service.strategy.simulacao.rendafixa.*;
 import br.gov.caixa.service.strategy.interfaces.CalculadoraInvestimentoStrategy;
+import br.gov.caixa.service.strategy.simulacao.rendavariavel.AcaoStrategy;
+import br.gov.caixa.service.strategy.simulacao.rendavariavel.CriptoMoedaStrategy;
+import br.gov.caixa.service.strategy.simulacao.rendavariavel.EtfStrategy;
 import jakarta.enterprise.context.RequestScoped;
 import lombok.extern.slf4j.Slf4j;
 
@@ -12,13 +13,21 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class SimulacaoInvestimentoStrategyFactory {
 
-    public static CalculadoraInvestimentoStrategy getStrategy(String tipoProduto) {
-        return switch (tipoProduto.toUpperCase()) {
-            case "CDB" -> new CdbStrategy();
-            case "LCI", "LCA" -> new LciStrategy();
-            case "TESOURO" -> new TesouroDiretoStrategy();
-            case "FUNDO" -> new FundoInvestimentoStrategy();
-            default -> throw new IllegalArgumentException("Tipo de produto não suportado: " + tipoProduto);
+    // TODO: talvez implementar uma abstractfactory para renda fixa e renda variavel
+    public static CalculadoraInvestimentoStrategy getStrategy(TipoProdutoInvestimentoEnum tipoProduto) {
+        return switch (tipoProduto) {
+            case CDB -> new CdbStrategy();
+            case LCI, LCA -> new LciStrategy();
+            case TESOURO -> new TesouroDiretoStrategy();
+            case FUNDO_INVESTIMENTO -> new FundoInvestimentoStrategy();
+            case CRI, CRA -> new CriCraStrategy();
+            case FII -> new FiiStrategy();
+            case DEBENTURE -> new DebentureStrategy();
+            case POUPANCA -> new PoupancaStrategy();
+            case ETF -> new EtfStrategy();
+            case CRIPTOMOEDA -> new CriptoMoedaStrategy();
+            case ACAO -> new AcaoStrategy();
+//            default -> throw new IllegalArgumentException("Tipo de produto não suportado: " + tipoProduto);
         };
     }
 

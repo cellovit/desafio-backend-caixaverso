@@ -4,6 +4,7 @@ import br.gov.caixa.domain.enums.PerfilInvestidorEnum;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotNull;
+import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -12,6 +13,7 @@ import java.util.List;
 
 @Entity
 @Data
+@Builder
 @EqualsAndHashCode(callSuper = true)
 @Table(name = "perfil_investidor")
 public class PerfilInvestidor extends AbstractEntity {
@@ -27,8 +29,8 @@ public class PerfilInvestidor extends AbstractEntity {
 
     @OneToOne(mappedBy = "perfilInvestidor")
     private Investidor investidor;
-
-    @ManyToMany(mappedBy = "perfis")
-    private List<ProdutoInvestimento> produtosRecomendados;
+//
+//    @ManyToMany(mappedBy = "perfis")
+//    private List<ProdutoInvestimento> produtosRecomendados;
 
 }

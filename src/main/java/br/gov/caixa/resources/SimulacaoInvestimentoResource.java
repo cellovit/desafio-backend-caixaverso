@@ -3,6 +3,7 @@ package br.gov.caixa.resources;
 import br.gov.caixa.dto.PageParams;
 import br.gov.caixa.dto.request.SimularInvestimentoRequestDto;
 import br.gov.caixa.dto.response.simulacao.HistoricoSimulacaoResponseDto;
+import br.gov.caixa.dto.response.simulacao.ResultadoSimulacaoInvestimentoResponseDto;
 import br.gov.caixa.exception.BusinessException;
 import br.gov.caixa.exception.ErrorResponse;
 import br.gov.caixa.service.SimulacaoService;
@@ -71,7 +72,7 @@ public class SimulacaoInvestimentoResource extends AbstractResource {
     @RunOnVirtualThread
     @Tag(name = "Histórico de Simulações de Investimento", description = "Histórico de Simulações de Investimento")
     @Operation(summary = "Obter histórico de simulações de investimento", description = "Retorna uma lista paginada com o histórico de simulações de investimento realizadas pelo usuário.")
-    @APIResponse(responseCode = OK_200, description = "Histórico de simulações obtido com sucesso.", content = @Content(schema = @Schema(implementation = HistoricoSimulacaoResponseDto.class)))
+    @APIResponse(responseCode = OK_200, description = "Histórico de simulações obtido com sucesso.", content = @Content(schema = @Schema(implementation = ResultadoSimulacaoInvestimentoResponseDto.class)))
     @APIResponse(responseCode = BAD_REQUEST_400, description = BAD_REQUEST_DESCRIPTION, content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
     @APIResponse(responseCode = INTERNAL_SERVER_ERROR_500, description = INTERNAL_SERVER_ERROR_DESCRIPTION, content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
     @APIResponse(responseCode = TIMEOUT_524, description = TIMEOUT_DESCRIPTION, content = @Content(schema = @Schema(implementation = ErrorResponse.class)))

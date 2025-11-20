@@ -1,4 +1,4 @@
-package br.gov.caixa.service.strategy;
+package br.gov.caixa.service.strategy.simulacao.rendafixa;
 
 import br.gov.caixa.qualifiers.CalculadoraInvestimentoStrategyQualifier;
 import br.gov.caixa.service.strategy.interfaces.CalculadoraInvestimentoStrategy;
@@ -7,15 +7,18 @@ import lombok.extern.slf4j.Slf4j;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
-@CalculadoraInvestimentoStrategyQualifier("TesouroDireto")
+@CalculadoraInvestimentoStrategyQualifier("FundoInvestimento")
 @Slf4j
-public class TesouroDiretoStrategy implements CalculadoraInvestimentoStrategy {
+public class FundoInvestimentoStrategy implements CalculadoraInvestimentoStrategy {
+
+    private final BigDecimal taxaAdministracaoMensal = new BigDecimal(0.05);
 
     @Override
     public BigDecimal calcularValorFinal(BigDecimal valorAplicado, BigDecimal rentabilidade, int prazoMeses) {
-        // Juros simples: VF = VA * (1 + taxa * prazo)
-        BigDecimal total = BigDecimal.ONE.add(rentabilidade.multiply(BigDecimal.valueOf(prazoMeses)));
-        return valorAplicado.multiply(total).setScale(2, RoundingMode.UP);
+        // Rentabilidade líquida = rentabilidade - taxa de administração
+        BigDecimal rentabilidadeLiquida = rentabilidade.subtract(taxaAdministracaoMensal);
+        BigDecimal fator = BigDecimal.ONE.add(rentabilidadeLiquida);
+        return valorAplicado.multiply(fator.pow(prazoMeses)).setScale(2, RoundingMode.UP);
     }
 
     @Override

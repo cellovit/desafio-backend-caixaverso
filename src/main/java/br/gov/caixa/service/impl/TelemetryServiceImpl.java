@@ -20,13 +20,15 @@ public class TelemetryServiceImpl implements TelemetryService {
     MeterRegistry registry;
 
     @Override
+    // TODO: corrigir
     public TelemetryResponseDto collectTelemetryData() {
         var servicos = new ArrayList<TelemetryServiceResponseDto>();
 
         final String SERVER_REQUESTS = "http.server.requests";
 
         registry.get(SERVER_REQUESTS).timers()
-                .stream().filter(x -> StringUtils.contains(x.getId().getTag("uri"), "/"))
+                .stream()
+                // .filter(x -> StringUtils.contains(x.getId().getTag("uri"), "/"))
                 .forEach(t -> {
                     var servico = TelemetryServiceResponseDto.builder()
                             .nome(t.getId().getTag("uri"))

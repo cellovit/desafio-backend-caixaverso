@@ -1,9 +1,7 @@
-package br.gov.caixa.service.strategy;
+package br.gov.caixa.service.strategy.simulacao.rendafixa;
 
 import br.gov.caixa.qualifiers.CalculadoraInvestimentoStrategyQualifier;
 import br.gov.caixa.service.strategy.interfaces.CalculadoraInvestimentoStrategy;
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.enterprise.context.RequestScoped;
 import lombok.extern.slf4j.Slf4j;
 
 import java.math.BigDecimal;

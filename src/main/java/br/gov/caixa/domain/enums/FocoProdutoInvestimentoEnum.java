@@ -8,7 +8,7 @@ import lombok.Getter;
 public enum FocoProdutoInvestimentoEnum {
 
     LIQUIDEZ(10.0),
-    RENTABILIDADE(20.0);
+    RENTABILIDADE(25.0);
 
     private final Double pontuacao;
 }

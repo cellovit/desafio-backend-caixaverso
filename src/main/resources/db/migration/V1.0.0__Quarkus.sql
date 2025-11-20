@@ -34,17 +34,24 @@ IF NOT EXISTS (
     SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[investidor]') AND type = N'U'
 )
 BEGIN
+
+
     CREATE TABLE dbo.investidor (
         id BIGINT IDENTITY(1,1) PRIMARY KEY,
         nome NVARCHAR(255) NOT NULL,
         created_at DATETIME2 NULL,
         updated_at DATETIME2 NULL,
         uuid NVARCHAR(36) NOT NULL,
-        perfil_id BIGINT NOT NULL UNIQUE,
+        perfil_id BIGINT NULL,
+--        CONSTRAINT idx_col1 UNIQUE(perfil_id),
         CONSTRAINT fk_investidor_perfil FOREIGN KEY (perfil_id)
             REFERENCES perfil_investidor (id)
             ON DELETE CASCADE
     );
+
+    CREATE UNIQUE NONCLUSTERED INDEX idx_col1
+        ON dbo.investidor(perfil_id)
+        WHERE perfil_id IS NOT NULL;
 END;
 
 IF NOT EXISTS (
@@ -91,19 +98,19 @@ BEGIN
     );
 END;
 
-IF NOT EXISTS (
-    SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[produto_perfil]') AND type = N'U'
-)
-BEGIN
-    CREATE TABLE dbo.produto_perfil (
-        produto_id BIGINT NOT NULL,
-        perfil_id BIGINT NOT NULL,
-        PRIMARY KEY (produto_id, perfil_id),
-        CONSTRAINT fk_produto FOREIGN KEY (produto_id)
-            REFERENCES produto_investimento (id)
-            ON DELETE CASCADE,
-        CONSTRAINT fk_perfil FOREIGN KEY (perfil_id)
-            REFERENCES perfil_investidor (id)
-            ON DELETE CASCADE
-    );
-END;
+--IF NOT EXISTS (
+--    SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[produto_perfil]') AND type = N'U'
+--)
+--BEGIN
+--    CREATE TABLE dbo.produto_perfil (
+--        produto_id BIGINT NOT NULL,
+--        perfil_id BIGINT NOT NULL,
+--        PRIMARY KEY (produto_id, perfil_id),
+--        CONSTRAINT fk_produto FOREIGN KEY (produto_id)
+--            REFERENCES produto_investimento (id)
+--            ON DELETE CASCADE,
+--        CONSTRAINT fk_perfil FOREIGN KEY (perfil_id)
+--            REFERENCES perfil_investidor (id)
+--            ON DELETE CASCADE
+--    );
+--END;
