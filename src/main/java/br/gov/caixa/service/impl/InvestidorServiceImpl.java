@@ -51,9 +51,13 @@ public class InvestidorServiceImpl implements InvestidorService {
             log.info("investidor sem perfil, calculando perfil para o investidor id: {} com base nos seus investimentos", id);
             var perfilEnum = motorRecomendacaoService.calcularPerfil(id);
 
+            var pontuacao = investidor.getInvestimentos().isEmpty() ?
+                    perfilEnum.getLimiarPontuacao() :
+                    BigDecimal.valueOf(calculaPontuacaoFinalInvestidor(investidor.getInvestimentos()));
+
             var novoPerfilinvestidor = PerfilInvestidor.builder()
                     .titulo(perfilEnum)
-                    .pontuacao(BigDecimal.valueOf(calculaPontuacaoFinalInvestidor(investidor.getInvestimentos())))
+                    .pontuacao(pontuacao)
                     .investidor(investidor)
                     .build();
 
