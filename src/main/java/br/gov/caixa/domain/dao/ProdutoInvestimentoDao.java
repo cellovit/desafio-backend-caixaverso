@@ -33,22 +33,9 @@ public class ProdutoInvestimentoDao implements ProdutoInvestimentoRepository {
                 .list();
     }
 
-//    @Override
-//    public List<ProdutoInvestimento> findByPerfil(String tituloPerfil, PageParams pageParams) {
-//        var page = Page.of(pageParams.page() - 1, pageParams.pageSize());
-//        return find("SELECT p " +
-//                "FROM ProdutoInvestimento p " +
-//                "JOIN p.perfis pi " +
-//                "WHERE pi.titulo = :tituloPerfil ", Parameters.with("tituloPerfil", tituloPerfil))
-//                .page(page)
-//                .list();
-//    }
-
     @Override
     public List<ProdutoInvestimento> findByRisco(RiscoInvestimentoEnum risco, PageParams pageParams) {
         var page = Page.of(pageParams.page() - 1, pageParams.pageSize());
-        var ff = listAll();
-        log.info("list: {}", ff);
         return find("risco = :risco", Parameters.with("risco", risco))
                 .page(page)
                 .list();

@@ -1,6 +1,7 @@
 package br.gov.caixa.exception;
 
 import br.gov.caixa.domain.enums.BusinessExceptionEnum;
+import br.gov.caixa.exception.response.ErrorResponse;
 import jakarta.ws.rs.core.Response;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;

@@ -1,4 +1,4 @@
-package br.gov.caixa.exception;
+package br.gov.caixa.exception.response;
 
 import java.io.Serializable;
 

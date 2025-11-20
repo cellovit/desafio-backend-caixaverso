@@ -97,20 +97,18 @@ BEGIN
             ON DELETE CASCADE
     );
 END;
+IF NOT EXISTS (
+    SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[telemetry_metrics]') AND type = N'U'
+)
+BEGIN
+    CREATE TABLE dbo.telemetry_metrics (
+        id BIGINT IDENTITY(1,1) PRIMARY KEY, -- herdado de AbstractEntity (chave primária)
+        endpoint NVARCHAR(255) NOT NULL,
+        tempo_resposta DECIMAL(20,2) NOT NULL,
+        data_coleta DATETIME2 NOT NULL,
+        created_at DATETIME2 DEFAULT SYSUTCDATETIME(),
+        updated_at DATETIME2 DEFAULT SYSUTCDATETIME(),
+        uuid NVARCHAR(36) NOT NULL
+    );
+END;
 
---IF NOT EXISTS (
---    SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[produto_perfil]') AND type = N'U'
---)
---BEGIN
---    CREATE TABLE dbo.produto_perfil (
---        produto_id BIGINT NOT NULL,
---        perfil_id BIGINT NOT NULL,
---        PRIMARY KEY (produto_id, perfil_id),
---        CONSTRAINT fk_produto FOREIGN KEY (produto_id)
---            REFERENCES produto_investimento (id)
---            ON DELETE CASCADE,
---        CONSTRAINT fk_perfil FOREIGN KEY (perfil_id)
---            REFERENCES perfil_investidor (id)
---            ON DELETE CASCADE
---    );
---END;

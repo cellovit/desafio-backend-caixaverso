@@ -5,7 +5,7 @@ import br.gov.caixa.dto.request.SimularInvestimentoRequestDto;
 import br.gov.caixa.dto.response.simulacao.HistoricoSimulacaoResponseDto;
 import br.gov.caixa.dto.response.simulacao.ResultadoSimulacaoInvestimentoResponseDto;
 import br.gov.caixa.exception.BusinessException;
-import br.gov.caixa.exception.ErrorResponse;
+import br.gov.caixa.exception.response.ErrorResponse;
 import br.gov.caixa.service.SimulacaoService;
 import io.quarkus.security.Authenticated;
 import io.smallrye.common.annotation.RunOnVirtualThread;

@@ -5,7 +5,7 @@ import br.gov.caixa.dto.PageParams;
 import br.gov.caixa.dto.response.cliente.HistoricoInvestimentoResponseDto;
 import br.gov.caixa.dto.response.cliente.PerfilRiscoResponseDto;
 import br.gov.caixa.exception.BusinessException;
-import br.gov.caixa.exception.ErrorResponse;
+import br.gov.caixa.exception.response.ErrorResponse;
 import br.gov.caixa.service.InvestidorService;
 import br.gov.caixa.service.ProdutoInvestimentoService;
 import io.quarkus.security.Authenticated;

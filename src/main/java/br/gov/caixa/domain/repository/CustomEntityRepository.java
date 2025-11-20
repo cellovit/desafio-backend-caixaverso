@@ -2,8 +2,10 @@ package br.gov.caixa.domain.repository;
 
 import br.gov.caixa.dto.PageParams;
 import br.gov.caixa.dto.response.simulacao.SimulacaoProdutoDiaQueryResultDto;
+import br.gov.caixa.dto.response.telemetry.TelemetryServiceResponseDto;
 import io.quarkus.hibernate.orm.panache.PanacheRepository;
 
+import java.time.LocalDate;
 import java.util.List;
 
 /*
@@ -12,4 +14,5 @@ import java.util.List;
 */
 public interface CustomEntityRepository extends PanacheRepository {
     List<SimulacaoProdutoDiaQueryResultDto> simulacaoPorProdutoDia(PageParams pageParams);
+    List<TelemetryServiceResponseDto> filtrarDadosTelemetriaPorPeriodo(LocalDate dataInicio, LocalDate dataFim);
 }

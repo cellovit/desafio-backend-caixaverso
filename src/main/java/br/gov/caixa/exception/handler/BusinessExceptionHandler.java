@@ -1,4 +1,4 @@
-package br.gov.caixa.filters;
+package br.gov.caixa.exception.handler;
 
 import br.gov.caixa.exception.BusinessException;
 import jakarta.ws.rs.Produces;

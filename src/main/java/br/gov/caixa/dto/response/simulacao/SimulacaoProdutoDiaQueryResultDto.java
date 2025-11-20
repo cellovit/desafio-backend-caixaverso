@@ -19,9 +19,8 @@ public class SimulacaoProdutoDiaQueryResultDto {
     private Double mediaValorFinal;
 
     /*
-        O HIbernate necessita de um construtor com todos os parametros para popular o DTO a partir do resultado da query
+        O Hibernate necessita de um construtor com todos os parametros para popular o DTO a partir do resultado da query
     */
-
     public SimulacaoProdutoDiaQueryResultDto(String produto, Long quantidadeSimulacoes, LocalDate data, Double mediaValorFinal) {
         this.produto = produto;
         this.quantidadeSimulacoes = quantidadeSimulacoes;
