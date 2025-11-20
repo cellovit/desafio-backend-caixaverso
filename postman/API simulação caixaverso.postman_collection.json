@@ -1,0 +1,368 @@
+{
+	"info": {
+		"_postman_id": "6495b421-f6c5-4cd9-9e53-bbc909b8ed06",
+		"name": "API simulação caixaverso",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "6073019"
+	},
+	"item": [
+		{
+			"name": "Token keycloak",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "secret",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "backend-service",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "content-type",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "username",
+							"value": "alice",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "alice",
+							"type": "text"
+						},
+						{
+							"key": "grant_type",
+							"value": "password",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8081/realms/quarkus/protocol/openid-connect/token",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"realms",
+						"quarkus",
+						"protocol",
+						"openid-connect",
+						"token"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Telemetria",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{access_token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/telemetria?dataInicio=2025-11-10&dataFim=2025-11-27",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"telemetria"
+					],
+					"query": [
+						{
+							"key": "dataInicio",
+							"value": "2025-11-10"
+						},
+						{
+							"key": "dataFim",
+							"value": "2025-11-27"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Simulacoes",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{access_token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/simulacoes",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"simulacoes"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "4",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Simular Investimento com tipoProduto",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{access_token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"clienteId\": 3,\r\n    \"valor\": 564.00,\r\n    \"prazoMeses\": 12,\r\n    \"tipoProduto\": \"ACAO\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/simular-investimento",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"simular-investimento"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Simulacoes por produto e dia",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{access_token}}"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/simulacoes/por-produto-dia?data={{$randomDateRecent}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"simulacoes",
+						"por-produto-dia"
+					],
+					"query": [
+						{
+							"key": "data",
+							"value": "{{$randomDateRecent}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Perfil de Investidor por identificador do cliente sem perfil",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{access_token}}"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/perfil-risco/:clienteId",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"perfil-risco",
+						":clienteId"
+					],
+					"variable": [
+						{
+							"key": "clienteId",
+							"value": "7"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/metrics/json",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/metrics/json",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"metrics",
+						"json"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "investimentos por identificador do cliente",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{access_token}}"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/investimentos/3",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"investimentos",
+						"3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Produtos recomendados para perfil CONSERVADOR",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{access_token}}"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/produtos-recomendados/:perfil",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"produtos-recomendados",
+						":perfil"
+					],
+					"variable": [
+						{
+							"key": "perfil",
+							"value": "CONSERVADOR"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					"const options = {\r",
+					"  url: 'http://localhost:8081/realms/quarkus/protocol/openid-connect/token',\r",
+					"  method: 'POST',\r",
+					"  header: {\r",
+					"    'Content-Type': 'application/x-www-form-urlencoded',\r",
+					"    'Authorization': 'Basic YmFja2VuZC1zZXJ2aWNlOnNlY3JldA==' // substitua conforme necessário\r",
+					"  },\r",
+					"  body: {\r",
+					"    mode: 'urlencoded',\r",
+					"    urlencoded: [\r",
+					"      { key: 'username', value: 'alice' },\r",
+					"      { key: 'password', value: 'alice' },\r",
+					"      { key: 'grant_type', value: 'password' }\r",
+					"    ]\r",
+					"  }\r",
+					"};\r",
+					"\r",
+					"pm.sendRequest(options, function (err, res) {\r",
+					"  if (err) {\r",
+					"    console.log('Erro na requisição:', err);\r",
+					"    return;\r",
+					"  }\r",
+					"  try {\r",
+					"    const json = res.json();\r",
+					"    if (json.access_token) {\r",
+					"      pm.environment.set('access_token', json.access_token);\r",
+					"      if (json.refresh_token) pm.environment.set('refresh_token', json.refresh_token);\r",
+					"      console.log('access_token salvo em variável de ambiente.');\r",
+					"    } else {\r",
+					"      console.log('Resposta sem access_token:', res.text());\r",
+					"    }\r",
+					"  } catch (e) {\r",
+					"    console.log('Falha ao parsear resposta:', res.text());\r",
+					"  }\r",
+					"});"
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
