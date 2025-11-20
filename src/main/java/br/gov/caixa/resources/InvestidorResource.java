@@ -4,6 +4,7 @@ import br.gov.caixa.domain.enums.PerfilInvestidorEnum;
 import br.gov.caixa.dto.PageParams;
 import br.gov.caixa.dto.response.cliente.HistoricoInvestimentoResponseDto;
 import br.gov.caixa.dto.response.cliente.PerfilRiscoResponseDto;
+import br.gov.caixa.dto.response.cliente.ProdutoRecomendadoResponseDto;
 import br.gov.caixa.exception.BusinessException;
 import br.gov.caixa.exception.response.ErrorResponse;
 import br.gov.caixa.service.InvestidorService;
@@ -68,7 +69,7 @@ public class InvestidorResource extends AbstractResource {
         });
     }
 
-    @Tag(name = "Histórico de investimentos pelo id do cliente", description = "Histórico de investimentos pelo id do cliente")
+    @Tag(name = "Histórico de investimentos do cliente", description = "Histórico de investimentos do cliente")
     @Operation(summary = "Busca histórico de investimentos pelo id do cliente", description = "Busca histórico de investimentos pelo id do cliente")
     @APIResponse(responseCode = OK_200, description = "", content = @Content(schema = @Schema(implementation = HistoricoInvestimentoResponseDto.class)))
     @APIResponse(responseCode = BAD_REQUEST_400, description = BAD_REQUEST_DESCRIPTION, content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
@@ -89,9 +90,9 @@ public class InvestidorResource extends AbstractResource {
         });
     }
 
-    @Tag(name = "Histórico de investimentos pelo id do cliente", description = "Histórico de investimentos pelo id do cliente")
-    @Operation(summary = "Busca histórico de investimentos pelo id do cliente", description = "Busca histórico de investimentos pelo id do cliente")
-    @APIResponse(responseCode = OK_200, description = "", content = @Content(schema = @Schema(implementation = HistoricoInvestimentoResponseDto.class)))
+    @Tag(name = "Produtos recomendados de acordo com o perfil do cliente", description = "Busca produtos recomendados de acordo com o perfil do cliente")
+    @Operation(summary = "Produtos recomendados de acordo com o perfil do cliente", description = "Busca produtos recomendados de acordo com o perfil do cliente")
+    @APIResponse(responseCode = OK_200, description = "", content = @Content(schema = @Schema(implementation = ProdutoRecomendadoResponseDto.class)))
     @APIResponse(responseCode = BAD_REQUEST_400, description = BAD_REQUEST_DESCRIPTION, content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
     @APIResponse(responseCode = INTERNAL_SERVER_ERROR_500, description = INTERNAL_SERVER_ERROR_DESCRIPTION, content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
     @APIResponse(responseCode = TIMEOUT_524, description = TIMEOUT_DESCRIPTION, content = @Content(schema = @Schema(implementation = ErrorResponse.class)))

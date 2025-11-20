@@ -4,6 +4,7 @@ import br.gov.caixa.dto.PageParams;
 import br.gov.caixa.dto.request.SimularInvestimentoRequestDto;
 import br.gov.caixa.dto.response.simulacao.HistoricoSimulacaoResponseDto;
 import br.gov.caixa.dto.response.simulacao.ResultadoSimulacaoInvestimentoResponseDto;
+import br.gov.caixa.dto.response.simulacao.SimulacaoProdutoDiaResponseDto;
 import br.gov.caixa.exception.BusinessException;
 import br.gov.caixa.exception.response.ErrorResponse;
 import br.gov.caixa.service.SimulacaoService;
@@ -70,9 +71,9 @@ public class SimulacaoInvestimentoResource extends AbstractResource {
     @Path("/simulacoes/por-produto-dia")
     @GET
     @RunOnVirtualThread
-    @Tag(name = "Histórico de Simulações de Investimento", description = "Histórico de Simulações de Investimento")
-    @Operation(summary = "Obter histórico de simulações de investimento", description = "Retorna uma lista paginada com o histórico de simulações de investimento realizadas pelo usuário.")
-    @APIResponse(responseCode = OK_200, description = "Histórico de simulações obtido com sucesso.", content = @Content(schema = @Schema(implementation = ResultadoSimulacaoInvestimentoResponseDto.class)))
+    @Tag(name = "Simulações de Investimento por produto e dia", description = "Obtem uma lista de simulações de Investimento por produto e dia")
+    @Operation(summary = "Simulações de Investimento por produto e dia", description = "Obtem uma lista de simulações de Investimento por produto e dia")
+    @APIResponse(responseCode = OK_200, description = "Lista de simulações obtido com sucesso.", content = @Content(schema = @Schema(implementation = SimulacaoProdutoDiaResponseDto.class)))
     @APIResponse(responseCode = BAD_REQUEST_400, description = BAD_REQUEST_DESCRIPTION, content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
     @APIResponse(responseCode = INTERNAL_SERVER_ERROR_500, description = INTERNAL_SERVER_ERROR_DESCRIPTION, content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
     @APIResponse(responseCode = TIMEOUT_524, description = TIMEOUT_DESCRIPTION, content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
@@ -98,6 +99,13 @@ public class SimulacaoInvestimentoResource extends AbstractResource {
     @POST
     @Path("/simular-investimento")
     @RunOnVirtualThread
+    @Tag(name = "Simulação de investimento", description = "Realizar simulação de investimento")
+    @Operation(summary = "Realizar simulação de investimento", description = "Retorna uma lista de simulações baseada no perfil do cliente")
+    @APIResponse(responseCode = OK_200, description = "Simulação realizada com sucesso.", content = @Content(schema = @Schema(implementation = ResultadoSimulacaoInvestimentoResponseDto.class)))
+    @APIResponse(responseCode = BAD_REQUEST_400, description = BAD_REQUEST_DESCRIPTION, content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
+    @APIResponse(responseCode = INTERNAL_SERVER_ERROR_500, description = INTERNAL_SERVER_ERROR_DESCRIPTION, content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
+    @APIResponse(responseCode = TIMEOUT_524, description = TIMEOUT_DESCRIPTION, content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
+    @APIResponse(responseCode = UNAUTHORIZED_401, description = UNAUTHORIZED_DESCRIPTION, content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
     public Response simularInvestimento(@Valid SimularInvestimentoRequestDto requestDto) throws BusinessException {
         return processAndLog(() -> {
             return Response.ok(simulacaoService.simularInvestimento(requestDto)).build();
