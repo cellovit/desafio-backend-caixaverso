@@ -1,26 +1,17 @@
 package br.gov.caixa.service.impl;
 
-import br.gov.caixa.domain.entity.Investimento;
-import br.gov.caixa.domain.entity.ProdutoInvestimento;
 import br.gov.caixa.domain.enums.BusinessExceptionEnum;
 import br.gov.caixa.domain.enums.FocoProdutoInvestimentoEnum;
 import br.gov.caixa.domain.enums.PerfilInvestidorEnum;
-import br.gov.caixa.domain.enums.RiscoInvestimentoEnum;
 import br.gov.caixa.domain.repository.InvestidorRepository;
-import br.gov.caixa.domain.repository.PerfilInvestidorRepository;
 import br.gov.caixa.domain.repository.ProdutoInvestimentoRepository;
-import br.gov.caixa.dto.PageParams;
 import br.gov.caixa.exception.BusinessException;
 import br.gov.caixa.service.MotorRecomendacaoService;
-import br.gov.caixa.util.RiscoInvestimentoUtil;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import lombok.extern.slf4j.Slf4j;
 
 import java.math.BigDecimal;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 import static br.gov.caixa.util.RiscoInvestimentoUtil.*;
 
@@ -30,9 +21,6 @@ public class MotorRecomendacaoServiceImpl implements MotorRecomendacaoService {
 
     @Inject
     InvestidorRepository investidorRepository;
-
-    @Inject
-    ProdutoInvestimentoRepository produtoInvestimentoRepository;
 
     @Override
     public PerfilInvestidorEnum calcularPerfil(Long investidorId) {

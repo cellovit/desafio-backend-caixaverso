@@ -2,9 +2,11 @@ package br.gov.caixa.mapper;
 
 import br.gov.caixa.domain.entity.Investimento;
 import br.gov.caixa.dto.response.cliente.HistoricoInvestimentoResponseDto;
+import org.mapstruct.InjectionStrategy;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
+// , injectionStrategy = InjectionStrategy.CONSTRUCTOR
 @Mapper(componentModel = "jakarta")
 public interface InvestimentoMapper {
 

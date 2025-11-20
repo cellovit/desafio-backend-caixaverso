@@ -23,49 +23,7 @@ import java.util.concurrent.TimeUnit;
 public class TelemetryServiceImpl implements TelemetryService {
 
     @Inject
-    MeterRegistry registry;
-
-    @Inject
     CustomEntityRepository repository;
-
-    @Inject
-    TelemetryMetricsRepository telemetryMetricsRepository;
-
-    @Override
-    // TODO: corrigir
-    public TelemetryResponseDto collectTelemetryData() {
-        var servicos = new ArrayList<TelemetryServiceResponseDto>();
-        try {
-            final String SERVER_REQUESTS = "http.server.requests";
-
-            registry.get(SERVER_REQUESTS).timers()
-                    .stream()
-//                .filter(x -> x.getId().getTag("outcome") == "SUCCESS")
-                    // .filter(x -> StringUtils.contains(x.getId().getTag("uri"), "/"))
-                    .forEach(t -> {
-                        var servico = TelemetryServiceResponseDto.builder()
-                                .nome(t.getId().getTag("uri"))
-                                .mediaTempoRespostaMs(t.mean(TimeUnit.MILLISECONDS))
-                                .quantidadeChamadas(t.count())
-                                .build();
-                        servicos.add(servico);
-                    });
-
-            var response = TelemetryResponseDto.builder()
-                    .servicos(servicos)
-                    .inicio(LocalDate.now().toString())
-                    .fim(LocalDate.now().toString())
-                    .build();
-
-            return response;
-        } catch (MeterNotFoundException ex) {
-            return TelemetryResponseDto.builder()
-                    .servicos(servicos)
-                    .inicio(LocalDate.now().toString())
-                    .fim(LocalDate.now().toString())
-                    .build();
-        }
-    }
 
     @Override
     public TelemetryResponseDto collectTelemetryData(LocalDate dataInicio, LocalDate dataFim) {
@@ -79,9 +37,6 @@ public class TelemetryServiceImpl implements TelemetryService {
     @Override
     @Transactional
     public void insert(TelemetryMetrics entity) {
-
-        var all = telemetryMetricsRepository.listAll();
-        log.info("TELE1: {}", all);
         repository.persist(entity);
     }
 

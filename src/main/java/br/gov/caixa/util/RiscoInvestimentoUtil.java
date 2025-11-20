@@ -4,15 +4,14 @@ import br.gov.caixa.domain.entity.Investimento;
 import br.gov.caixa.domain.enums.FocoProdutoInvestimentoEnum;
 import br.gov.caixa.domain.enums.PerfilInvestidorEnum;
 import br.gov.caixa.domain.enums.RiscoInvestimentoEnum;
-import jakarta.inject.Singleton;
+import jakarta.enterprise.context.ApplicationScoped;
 import lombok.extern.slf4j.Slf4j;
 
-import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-@Singleton
+@ApplicationScoped
 @Slf4j
 public class RiscoInvestimentoUtil {
     public static List<RiscoInvestimentoEnum> defineRiscoPorPerfil(PerfilInvestidorEnum perfil) {
