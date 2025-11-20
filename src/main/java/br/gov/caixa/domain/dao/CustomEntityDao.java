@@ -24,11 +24,12 @@ public class CustomEntityDao implements CustomEntityRepository {
     @Override
     public List<SimulacaoProdutoDiaQueryResultDto> simulacaoPorProdutoDia(PageParams pageParams) {
         var page = Page.of(pageParams.page() - 1, pageParams.pageSize());
-        return find("SELECT new br.gov.caixa.dto.response.simulacao.SimulacaoProdutoDiaQueryResultDto(s.produto, COUNT(s), s.dataSimulacao, AVG(s.valorFinal)) " +
+        var lista = find("SELECT new br.gov.caixa.dto.response.simulacao.SimulacaoProdutoDiaQueryResultDto(s.produto, COUNT(s), s.dataSimulacao, AVG(s.valorFinal)) " +
                         "FROM Simulacao s " +
                         "GROUP BY s.produto, s.dataSimulacao ")
                 .page(page)
                 .list();
+        return lista;
     }
 
 //    @Override

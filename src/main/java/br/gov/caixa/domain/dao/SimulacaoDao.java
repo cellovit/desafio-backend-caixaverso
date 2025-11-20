@@ -17,7 +17,7 @@ public class SimulacaoDao implements SimulacaoRepository {
     @Override
     public List<Simulacao> findPaginado(PageParams pageParams) {
         var page = Page.of(pageParams.page() - 1, pageParams.pageSize());
-        return Simulacao.findAll()
+        return findAll()
                 .page(page)
                 .list();
     }
