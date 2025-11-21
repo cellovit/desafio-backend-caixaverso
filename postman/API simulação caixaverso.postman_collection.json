@@ -105,6 +105,60 @@
 			"response": []
 		},
 		{
+			"name": "Health Live",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{access_token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/q/health/live",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"q",
+						"health",
+						"live"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Health Ready",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{access_token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/q/health/ready",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"q",
+						"health",
+						"ready"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "Simulacoes",
 			"request": {
 				"method": "GET",
@@ -137,6 +191,41 @@
 			"response": []
 		},
 		{
+			"name": "Simulacoes com parametros de paginação",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{access_token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/simulacoes?page=2&pageSize=3",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"simulacoes"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "2"
+						},
+						{
+							"key": "pageSize",
+							"value": "3"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "Simular Investimento com tipoProduto",
 			"request": {
 				"method": "POST",
@@ -150,6 +239,74 @@
 				"body": {
 					"mode": "raw",
 					"raw": "{\r\n    \"clienteId\": 3,\r\n    \"valor\": 564.00,\r\n    \"prazoMeses\": 12,\r\n    \"tipoProduto\": \"ACAO\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/simular-investimento",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"simular-investimento"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Simular Investimento sem tipoProduto para Investidor sem perfil e sem investimentos",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{access_token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"clienteId\": 6,\r\n    \"valor\": 564.00,\r\n    \"prazoMeses\": 12\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/simular-investimento",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"simular-investimento"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Simular Investimento sem tipoProduto para Investidor sem perfil e com investimentos",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{access_token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"clienteId\": 7,\r\n    \"valor\": 1200.00,\r\n    \"prazoMeses\": 12\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -233,6 +390,68 @@
 			"response": []
 		},
 		{
+			"name": "Perfil de Investidor por identificador do cliente com perfil",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{access_token}}"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/perfil-risco/:clienteId",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"perfil-risco",
+						":clienteId"
+					],
+					"variable": [
+						{
+							"key": "clienteId",
+							"value": "2"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Perfil de Investidor por identificador do cliente sem perfil e sem investimentos",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{access_token}}"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/perfil-risco/:clienteId",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"perfil-risco",
+						":clienteId"
+					],
+					"variable": [
+						{
+							"key": "clienteId",
+							"value": "6"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "http://localhost:8080/metrics/json",
 			"request": {
 				"method": "GET",
@@ -303,6 +522,31 @@
 							"key": "perfil",
 							"value": "CONSERVADOR"
 						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Produtos recomendados para perfil AGRESSIVO",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{access_token}}"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/produtos-recomendados/AGRESSIVO",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"produtos-recomendados",
+						"AGRESSIVO"
 					]
 				}
 			},
