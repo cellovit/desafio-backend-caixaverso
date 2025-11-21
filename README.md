@@ -2,20 +2,17 @@
 
 API para simulação de investimentos com motor de recomendação e cálculo de perfil de risco
 
-#### Java 21
-#### Quarkus 3.27.0
-
-- [x] Project plan
-- [ ] Draft 1 code
-- [ ] Draft 2 code
-- [ ] Test plan
+* **Java 21**
+* **Quarkus 3.27.0**
+* **Keycloak**
+* **SQL Server**
 
 ## Como executar o projeto
 
 ### Requisitos
 - [x] JDK 21
 - [x] Docker
-- [x] Maven
+- [x] maven
 - [x] Postman/Insomnia
 
 * **Gerar o pacote da aplicação**
@@ -44,3 +41,10 @@ API para simulação de investimentos com motor de recomendação e cálculo de 
 #### Collection do Postman disponível na pasta `/postman`
 
 #### Swagger disponível em `http://localhost:8080/q/swagger-ui/`
+
+## Regras da simulação e do motor de recomendação
+
+* Se a requisição nao receber o parametro de tipo de produto, faz a simulação para todos os produtos do perfil do investidor
+* Se ele possuir perfil cadastrado, a API recomenda e simula produtos de acordo com perfil cadastrado
+* Caso ele não possua perfil realiza a simulação através do motor de recomendação que define uma pontuação analisando os investimentos deste cliente
+* Caso ele não possua perfil cadastrado e nem investimentos a API define esse cliente como um investidor **Conservador** e recomenda produtos de investimento com risco **Baixo** 
