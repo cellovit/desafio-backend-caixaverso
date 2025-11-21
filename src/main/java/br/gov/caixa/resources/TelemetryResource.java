@@ -12,6 +12,7 @@ import jakarta.ws.rs.core.Response;
 import lombok.extern.slf4j.Slf4j;
 import org.eclipse.microprofile.faulttolerance.Timeout;
 import org.eclipse.microprofile.openapi.annotations.Operation;
+import org.eclipse.microprofile.openapi.annotations.enums.SchemaType;
 import org.eclipse.microprofile.openapi.annotations.media.Content;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
@@ -42,7 +43,7 @@ public class TelemetryResource extends AbstractResource {
     @RunOnVirtualThread
     @Tag(name = "Dados de telemetria", description = "Obtem uma lista de chamadas realizadas na API")
     @Operation(summary = "Dados de telemetria", description = "Obtem uma lista de chamadas realizadas na API")
-    @APIResponse(responseCode = OK_200, description = "Lista de chamadas realizadas na API obtida com sucesso", content = @Content(schema = @Schema(implementation = TelemetryResponseDto.class)))
+    @APIResponse(responseCode = OK_200, description = "Lista de chamadas realizadas na API obtida com sucesso", content = @Content(schema = @Schema(type = SchemaType.ARRAY, implementation = TelemetryResponseDto.class)))
     @APIResponse(responseCode = BAD_REQUEST_400, description = BAD_REQUEST_DESCRIPTION, content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
     @APIResponse(responseCode = INTERNAL_SERVER_ERROR_500, description = INTERNAL_SERVER_ERROR_DESCRIPTION, content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
     @APIResponse(responseCode = TIMEOUT_524, description = TIMEOUT_DESCRIPTION, content = @Content(schema = @Schema(implementation = ErrorResponse.class)))

@@ -21,6 +21,7 @@ import jakarta.ws.rs.core.Response;
 import lombok.extern.slf4j.Slf4j;
 import org.eclipse.microprofile.faulttolerance.Timeout;
 import org.eclipse.microprofile.openapi.annotations.Operation;
+import org.eclipse.microprofile.openapi.annotations.enums.SchemaType;
 import org.eclipse.microprofile.openapi.annotations.media.Content;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
@@ -71,7 +72,7 @@ public class InvestidorResource extends AbstractResource {
 
     @Tag(name = "Histórico de investimentos do cliente", description = "Histórico de investimentos do cliente")
     @Operation(summary = "Busca histórico de investimentos pelo id do cliente", description = "Busca histórico de investimentos pelo id do cliente")
-    @APIResponse(responseCode = OK_200, description = "", content = @Content(schema = @Schema(implementation = HistoricoInvestimentoResponseDto.class)))
+    @APIResponse(responseCode = OK_200, description = "", content = @Content(schema = @Schema(type = SchemaType.ARRAY, implementation = HistoricoInvestimentoResponseDto.class)))
     @APIResponse(responseCode = BAD_REQUEST_400, description = BAD_REQUEST_DESCRIPTION, content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
     @APIResponse(responseCode = INTERNAL_SERVER_ERROR_500, description = INTERNAL_SERVER_ERROR_DESCRIPTION, content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
     @APIResponse(responseCode = TIMEOUT_524, description = TIMEOUT_DESCRIPTION, content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
@@ -92,7 +93,7 @@ public class InvestidorResource extends AbstractResource {
 
     @Tag(name = "Produtos recomendados de acordo com o perfil do cliente", description = "Busca produtos recomendados de acordo com o perfil do cliente")
     @Operation(summary = "Produtos recomendados de acordo com o perfil do cliente", description = "Busca produtos recomendados de acordo com o perfil do cliente")
-    @APIResponse(responseCode = OK_200, description = "", content = @Content(schema = @Schema(implementation = ProdutoRecomendadoResponseDto.class)))
+    @APIResponse(responseCode = OK_200, description = "", content = @Content(schema = @Schema(type = SchemaType.ARRAY, implementation = ProdutoRecomendadoResponseDto.class)))
     @APIResponse(responseCode = BAD_REQUEST_400, description = BAD_REQUEST_DESCRIPTION, content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
     @APIResponse(responseCode = INTERNAL_SERVER_ERROR_500, description = INTERNAL_SERVER_ERROR_DESCRIPTION, content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
     @APIResponse(responseCode = TIMEOUT_524, description = TIMEOUT_DESCRIPTION, content = @Content(schema = @Schema(implementation = ErrorResponse.class)))

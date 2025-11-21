@@ -20,6 +20,7 @@ import jakarta.ws.rs.core.Response;
 import lombok.extern.slf4j.Slf4j;
 import org.eclipse.microprofile.faulttolerance.Timeout;
 import org.eclipse.microprofile.openapi.annotations.Operation;
+import org.eclipse.microprofile.openapi.annotations.enums.SchemaType;
 import org.eclipse.microprofile.openapi.annotations.media.Content;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
@@ -46,7 +47,7 @@ public class SimulacaoInvestimentoResource extends AbstractResource {
     @RunOnVirtualThread
     @Tag(name = "Histórico de Simulações de Investimento", description = "Histórico de Simulações de Investimento")
     @Operation(summary = "Obter histórico de simulações de investimento", description = "Retorna uma lista paginada com o histórico de simulações de investimento realizadas pelo usuário.")
-    @APIResponse(responseCode = OK_200, description = "Histórico de simulações obtido com sucesso.", content = @Content(schema = @Schema(implementation = HistoricoSimulacaoResponseDto.class)))
+    @APIResponse(responseCode = OK_200, description = "Histórico de simulações obtido com sucesso.", content = @Content(schema = @Schema(type = SchemaType.ARRAY, implementation = HistoricoSimulacaoResponseDto.class)))
     @APIResponse(responseCode = BAD_REQUEST_400, description = BAD_REQUEST_DESCRIPTION, content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
     @APIResponse(responseCode = INTERNAL_SERVER_ERROR_500, description = INTERNAL_SERVER_ERROR_DESCRIPTION, content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
     @APIResponse(responseCode = TIMEOUT_524, description = TIMEOUT_DESCRIPTION, content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
@@ -73,7 +74,7 @@ public class SimulacaoInvestimentoResource extends AbstractResource {
     @RunOnVirtualThread
     @Tag(name = "Simulações de Investimento por produto e dia", description = "Obtem uma lista de simulações de Investimento por produto e dia")
     @Operation(summary = "Simulações de Investimento por produto e dia", description = "Obtem uma lista de simulações de Investimento por produto e dia")
-    @APIResponse(responseCode = OK_200, description = "Lista de simulações obtido com sucesso.", content = @Content(schema = @Schema(implementation = SimulacaoProdutoDiaResponseDto.class)))
+    @APIResponse(responseCode = OK_200, description = "Lista de simulações obtido com sucesso.", content = @Content(schema = @Schema(type = SchemaType.ARRAY, implementation = SimulacaoProdutoDiaResponseDto.class)))
     @APIResponse(responseCode = BAD_REQUEST_400, description = BAD_REQUEST_DESCRIPTION, content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
     @APIResponse(responseCode = INTERNAL_SERVER_ERROR_500, description = INTERNAL_SERVER_ERROR_DESCRIPTION, content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
     @APIResponse(responseCode = TIMEOUT_524, description = TIMEOUT_DESCRIPTION, content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
